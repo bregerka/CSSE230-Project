@@ -5,10 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Graph<T> {
+public class Graph<T>{
 	private Hashtable<T, Node> nodes;
 	private int numNodes;
 	private int numEdges;
+	private double maxDistance;
+	private double maxTime;
 	
 	public Graph(){
 		this.nodes = new Hashtable<T, Node>();
@@ -16,7 +18,7 @@ public class Graph<T> {
 		this.numEdges = 0;
 	}
 	
-	public boolean addNode(T e,Coordinate c) {
+	public boolean addNode(T e,Coordinate c){
 		this.nodes.put(e, new Node(e,c));
 		this.numNodes++;
 		return true;
@@ -30,11 +32,19 @@ public class Graph<T> {
 		return this.nodes.containsKey(e);
 	}
 	
-	public boolean addEdge(T e1, T e2) {
+	public boolean addEdge(T e1, T e2){
 		if (!this.nodes.containsKey(e1) && !this.nodes.containsKey(e2)) return false;
 		this.nodes.get(e1).addEdge(e2);
 		this.numEdges++;
 	    return true;
+	}
+	
+	public void setMaxDistance(double x){
+		this.maxDistance = x;
+	}
+	
+	public void setMaxTime(double x){
+		this.maxTime = x;
 	}
 	
 	private class Node {
@@ -57,11 +67,16 @@ public class Graph<T> {
 			double cost = this.c.distanceTo(otherNode.c);
 			this.neighbors.add(new Edge(otherNode, cost));
 		}
+		
 		public double addRating(double x){
 			this.rating = this.rating*this.numRatings;
 			this.numRatings++;
 			this.rating = (this.rating + x)/this.numRatings;
 			return this.rating;
+		}
+		
+		public ArrayList<Edge> getNeighbors(){
+			return this.neighbors;
 		}
 	}
 	
