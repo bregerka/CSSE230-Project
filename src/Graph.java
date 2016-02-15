@@ -28,6 +28,11 @@ public class Graph<T>{
 		return this.nodes.get(e);	
 	}
 	
+	public Edge getShortestPath(T e){
+		Node temp = this.getNode(e);
+		return null;
+	}
+	
 	public boolean containsNode(T e){
 		return this.nodes.containsKey(e);
 	}
