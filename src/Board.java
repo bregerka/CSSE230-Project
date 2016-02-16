@@ -12,7 +12,7 @@ public class Board extends JPanel {
 	int w;
 	int h;
 	int Zoom = 1000;
-    private Image bardejov;
+    private Image image;
 	private int hh;
 	private int ww;
 
@@ -27,8 +27,8 @@ public class Board extends JPanel {
         
         loadImage();
         
-        w = bardejov.getWidth(this);
-        h =  bardejov.getHeight(this);
+        w = image.getWidth(this);
+        h =  image.getHeight(this);
 
               
     }
@@ -36,7 +36,7 @@ public class Board extends JPanel {
     private void loadImage() {
         
         ImageIcon ii = new ImageIcon("src\\Skyrim_Map.png");
-        bardejov = ii.getImage();        
+        image = ii.getImage();        
     }
     
     @Override
@@ -47,7 +47,7 @@ public class Board extends JPanel {
     	
     	
     	
-        g.drawImage(bardejov, x, y,ww,hh, null);
+        g.drawImage(image, x, y,ww,hh, null);
     }
 
 

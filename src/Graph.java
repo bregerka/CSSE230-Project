@@ -1,9 +1,11 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.Queue;
+
+import javax.swing.SwingUtilities;
 
 public class Graph<T>{
 	private Hashtable<T, Node> nodes;
@@ -11,6 +13,7 @@ public class Graph<T>{
 	private int numEdges;
 	private double maxDistance;
 	private double maxTime;
+	
 	
 	public Graph(){
 		this.nodes = new Hashtable<T, Node>();
@@ -52,12 +55,13 @@ public class Graph<T>{
 		this.maxTime = x;
 	}
 	
-	private class Node {
+	class Node implements ActionListener {
 		private T element;
 		private ArrayList<Edge> neighbors;
 		private double rating;
 		private int numRatings;
 		private Coordinate c;
+		
 		
 		public Node(T e,Coordinate location){
 			this.element = e;
@@ -81,8 +85,17 @@ public class Graph<T>{
 		}
 		
 		public ArrayList<Edge> getNeighbors(){
+			Main name = Graph.this.returnMain();
 			return this.neighbors;
 		}
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			Queue selectedNodes = Main.getQueue();
+			SwingUtilities.windowForComponent(returnGraph());
+		}
+		
+		
 	}
 	
 	private class Edge {
@@ -103,6 +116,11 @@ public class Graph<T>{
 		public double timeCost(){
 			return this.costFxn.timeCost;
 		}
+	}
+
+	public Main returnMain() {
+		// TODO Auto-generated method stub.
+		return Main.this;
 	}
 
 
