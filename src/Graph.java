@@ -132,8 +132,8 @@ public class Graph<T> {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			xxx = ((imagee.thing.x * 2 + c.getX() * imagee.Zoom / 1000));
-			yyy = ((imagee.thing.y * 2 + c.getY() * imagee.Zoom / 1000));
+			xxx = ((imagee.map.x * 2 + c.getX() * imagee.Zoom / 1000));
+			yyy = ((imagee.map.y * 2 + c.getY() * imagee.Zoom / 1000));
 
 			if (xxx < 1500 && yyy < 1000  && xxx > 0 && yyy > 0) {
 				

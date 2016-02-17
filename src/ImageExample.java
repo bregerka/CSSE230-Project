@@ -30,7 +30,7 @@ public class ImageExample extends JFrame {
 	int yy;
 	private Graph newGraph;
 	public static int Zoom = 1000;
-	static Map thing;
+	static Map map;
 
 	public ImageExample() {
 
@@ -62,7 +62,7 @@ public class ImageExample extends JFrame {
 		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
 		JTextArea nnn = new JTextArea("Choose a function");
-		nnn.setBackground(Color.LIGHT_GRAY);
+		System.out.println(menupanel.getBackground());
 		JPanel ComboPanel = new JPanel();
 		JPanel SearchPanel = new JPanel();
 		ComboPanel.add(Combobox);
@@ -115,15 +115,15 @@ public class ImageExample extends JFrame {
 
 			}
 		});
-		thing = new Map(this);
+		map = new Map(this);
 
-		thing.setLayout(new GridLayout(1221, 858));
+		map.setLayout(new GridLayout(1221, 858));
 
 		SearchPanel.add(SearchWindow);
 		JSlider ZoomScroll = new JSlider(1000, 3000, 1000);
 
 		ZoomScroll.addChangeListener(new ChangeListener() {
-			Map thingy = thing;
+			Map thingy = map;
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -190,12 +190,12 @@ public class ImageExample extends JFrame {
 
 		menupanel.setBackground(Color.BLACK);
 		add(menupanel, BorderLayout.WEST);
-		thing.addMouseListener(new MouseListener() {
+		map.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				thing.x += e.getX() - xx;
-				thing.y += e.getY() - yy;
+				map.x += e.getX() - xx;
+				map.y += e.getY() - yy;
 				System.out.println(e.getX());
 				System.out.println(e.getY());
 				repaint();
@@ -273,7 +273,7 @@ public class ImageExample extends JFrame {
 		while (afd.hasMoreElements()) {
 			add(afd.nextElement());
 		}
-		add(thing);
+		add(map);
 		setVisible(true);
 
 	}
