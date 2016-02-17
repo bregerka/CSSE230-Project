@@ -7,12 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +28,7 @@ public class ImageExample extends JFrame {
 	static Queue<Graph.Node> q = new LinkedList<Graph.Node>();
 	int xx;
 	int yy;
-	private Graph newMap;
+	private Graph newGraph;
 	public static int Zoom = 1000;
 	static Map thing;
 
@@ -38,23 +40,23 @@ public class ImageExample extends JFrame {
 	public void initUI() {
 		setResizable(false);
 		String bl = null;
-		newMap = new Graph(this);
-		newMap.addNode("DawnStar", new Coordinate(665, 128));
-		newMap.addNode("Falkreath", new Coordinate(550, 650));
-		newMap.addNode("Markarth", new Coordinate(107, 434));
-		newMap.addNode("Morthal", new Coordinate(482, 263));
-		newMap.addNode("Riften", new Coordinate(1052, 692));
-		newMap.addNode("Solitude", new Coordinate(434, 137));
-		newMap.addNode("WhiteRun", new Coordinate(623, 459));
-		newMap.addNode("Windhelm", new Coordinate(946, 359));
-		newMap.addNode("WinterHold", new Coordinate(868, 135));
-		newMap.addNode("Dragon Bridge", new Coordinate(308, 223));
-		newMap.addNode("Helgen", new Coordinate(634, 664));
-		newMap.addNode("Ivarstead", new Coordinate(785, 610));
-		newMap.addNode("Karthwasten", new Coordinate(230, 346));
-		newMap.addNode("Riverwood", new Coordinate(642, 560));
-		newMap.addNode("Rorikstead", new Coordinate(338, 398));
-		newMap.addNode("Shor's Stone", new Coordinate(1025, 623));
+		newGraph = new Graph(this);
+		newGraph.addNode("DawnStar", new Coordinate(665, 128));
+		newGraph.addNode("Falkreath", new Coordinate(550, 650));
+		newGraph.addNode("Markarth", new Coordinate(107, 434));
+		newGraph.addNode("Morthal", new Coordinate(482, 263));
+		newGraph.addNode("Riften", new Coordinate(1052, 692));
+		newGraph.addNode("Solitude", new Coordinate(434, 137));
+		newGraph.addNode("WhiteRun", new Coordinate(623, 459));
+		newGraph.addNode("Windhelm", new Coordinate(946, 359));
+		newGraph.addNode("WinterHold", new Coordinate(868, 135));
+		newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
+		newGraph.addNode("Helgen", new Coordinate(634, 664));
+		newGraph.addNode("Ivarstead", new Coordinate(785, 610));
+		newGraph.addNode("Karthwasten", new Coordinate(230, 346));
+		newGraph.addNode("Riverwood", new Coordinate(642, 560));
+		newGraph.addNode("Rorikstead", new Coordinate(338, 398));
+		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menupanel = new JPanel();
 		JComboBox Combobox = new JComboBox();
@@ -73,12 +75,15 @@ public class ImageExample extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
+					newGraph.nodes.clear();
 					nnn.setText("Choose 2 locations to find\nthe minumum distance between:");
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
+					newGraph.nodes.clear();
 					nnn.setText("Find the nearest town\nto the One selected");
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
+					newGraph.nodes.clear();
 					nnn.setText("Find the best Locations to\nvisit under a certain distance:");
 					JTextField DistSearchWindow = new JTextField("Enter Length:");
 					JPanel temppanel = new JPanel();
@@ -134,8 +139,41 @@ public class ImageExample extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
-					nnn.setText("Choose 2 locations to find\nthe minumum distance between:");
-
+					if (q.size() == 0) {
+						nnn.setText("Please select two nodes.");
+					}
+					if (q.size() == 1) {
+						nnn.setText("Please select 1 more node.");
+					}
+					if (q.size() == 2) {
+						Queue save = q;
+						nnn.setText(newGraph.findMin(q.poll(),q.poll()));
+					}
+				}
+				if (Combobox.getSelectedItem() == "Plan Road Trip") {
+					if (q.size() == 0) {
+						nnn.setText("Please select two nodes.");
+					}
+					if (q.size() == 1) {
+						nnn.setText("Please select 1 more node.");
+					}
+					if (q.size() == 2) {
+						if (getMinimumTextBox() == null) {
+							nnn.setText("Enter minimum travel distance.");
+						}
+						Queue save = q;
+						nnn.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getMinimumTextBox()));
+					}
+				}
+				if (Combobox.getSelectedItem() == "Find Nearest") {
+					if (q.size() == 0) {
+						nnn.setText("Please select a start node.");
+					}
+					if (q.size() == 1) {
+						nnn.setText("Check the boxes of the features you want from your destination.");
+						ArrayList checkBoxes = new ArrayList();
+						addCheckBoxes(menupanel);
+					}
 				}
 
 			}
@@ -200,9 +238,30 @@ public class ImageExample extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
+	
+	protected Object getMinimumTextBox() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	public void minimumDistance(){
+		
+	}
+	
+	public void addCheckBoxes(JPanel menuPanel){
+		JPanel checkPanel = new JPanel();
+		checkPanel.setLayout(new GridLayout(6,2));
+		JCheckBox generalStore = new JCheckBox("general store");
+		JCheckBox apothecary = new JCheckBox();
+		JCheckBox blacksmith = new JCheckBox();
+		JCheckBox inn = new JCheckBox();
+		JCheckBox magicStore = new JCheckBox();
+		JCheckBox jewelryStore = new JCheckBox();
+		checkPanel.add(generalStore);
+	}
 
 	protected void redrawnodes() {
-		Enumeration<JButton> afd = newMap.nodes.elements();
+		Enumeration<JButton> afd = newGraph.nodes.elements();
 
 		while (afd.hasMoreElements()) {
 			add(afd.nextElement());

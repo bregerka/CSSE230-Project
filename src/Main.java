@@ -17,13 +17,12 @@ public class Main extends JFrame {
 	
 	public Main() {
 		super("Testing");
-<<<<<<< HEAD
-		selectors = new JPanel(){
-=======
+
+		selectors = new JPanel();
+
 //		Graph thisGraph = new Graph();
 		this.selectors = new JPanel(){
 			@Override
->>>>>>> origin/master
 			public void paintComponent(Graphics g)
             {
                 g.setColor(Color.red);

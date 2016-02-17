@@ -59,6 +59,10 @@ public class Graph<T> {
 	public void setMaxTime(double x) {
 		this.maxTime = x;
 	}
+	
+	public String findMin(Node one, Node two){
+		return "-1";
+	}
 
 	class Node extends JPanel {
 
@@ -78,11 +82,11 @@ public class Graph<T> {
 
 		public Node(T e, Coordinate location) {
 			loadImage();
-<<<<<<< HEAD
+
 			setSize(40, 40);
-=======
+
 			setSize(1, 1);
->>>>>>> origin/master
+
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
@@ -166,6 +170,12 @@ public class Graph<T> {
 		public double timeCost() {
 			return this.costFxn.timeCost;
 		}
+	}
+
+	public String roadTripCalculator(Node poll, Node poll2,
+			Object minimumTextBox) {
+		// TODO Auto-generated method stub.
+		return null;
 	}
 
 }

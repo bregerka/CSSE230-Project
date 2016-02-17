@@ -15,11 +15,7 @@ public class Map extends JPanel {
 	int hh;
 	int ww;
     private Image bardejov;
-<<<<<<< HEAD
-=======
-  
-    
->>>>>>> origin/master
+
     ImageExample I ;
     Coordinate c;
 
