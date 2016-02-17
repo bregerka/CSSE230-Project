@@ -1,20 +1,20 @@
 
 public class Coordinate {
-	public double x,y;
+	public int x,y;
 
-	public Coordinate(double horizontal,double vertical){
+	public Coordinate(int horizontal,int vertical){
 		this.x = horizontal;
 		this.y = vertical;
 	}
-	public double getX(){
+	public int getX(){
 		return this.x;
 	}
-	public double getY(){
+	public int getY(){
 		return this.y;
 	}
-	public double distanceTo(Coordinate c2){
-		double dx = this.x - c2.x;
-		double dy = this.y - c2.y;
-		return Math.sqrt(dx*dx + dy*dy);
+	public int distanceTo(Coordinate c2){
+		int dx = this.x - c2.x;
+		int dy = this.y - c2.y;
+		return (int) Math.sqrt(dx*dx + dy*dy);
 	}
 }
