@@ -78,7 +78,11 @@ public class Graph<T> {
 
 		public Node(T e, Coordinate location) {
 			loadImage();
+<<<<<<< HEAD
 			setSize(40, 40);
+=======
+			setSize(1, 1);
+>>>>>>> origin/master
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
