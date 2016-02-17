@@ -62,6 +62,7 @@ public class ImageExample extends JFrame {
 		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
 		JTextArea nnn = new JTextArea("Choose a function");
+		nnn.setBackground(Color.LIGHT_GRAY);
 		JPanel ComboPanel = new JPanel();
 		JPanel SearchPanel = new JPanel();
 		ComboPanel.add(Combobox);
@@ -76,15 +77,15 @@ public class ImageExample extends JFrame {
 
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					newGraph.nodes.clear();
-					nnn.setText("Choose 2 locations to find\nthe minumum distance between:");
+					nnn.setText("Choose 2 locations to find\nthe minimum distance between them.");
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
 					newGraph.nodes.clear();
-					nnn.setText("Find the nearest town\nto the One selected");
+					nnn.setText("Get options for routes between two nodes.");
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
 					newGraph.nodes.clear();
-					nnn.setText("Find the best Locations to\nvisit under a certain distance:");
+					nnn.setText("Find the closest node with the feature(s) you specify.");
 					JTextField DistSearchWindow = new JTextField("Enter Length:");
 					JPanel temppanel = new JPanel();
 					menupanel.add(temppanel);
@@ -158,11 +159,11 @@ public class ImageExample extends JFrame {
 						nnn.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
-						if (getMinimumTextBox() == null) {
+						if (getRoadTripTextBox() == null) {
 							nnn.setText("Enter minimum travel distance.");
 						}
 						Queue save = q;
-						nnn.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getMinimumTextBox()));
+						nnn.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getRoadTripTextBox()));
 					}
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
@@ -239,7 +240,7 @@ public class ImageExample extends JFrame {
 		setLocationRelativeTo(null);
 	}
 	
-	protected Object getMinimumTextBox() {
+	protected Object getRoadTripTextBox() {
 		// TODO Auto-generated method stub.
 		return null;
 	}
@@ -251,13 +252,19 @@ public class ImageExample extends JFrame {
 	public void addCheckBoxes(JPanel menuPanel){
 		JPanel checkPanel = new JPanel();
 		checkPanel.setLayout(new GridLayout(6,2));
-		JCheckBox generalStore = new JCheckBox("general store");
-		JCheckBox apothecary = new JCheckBox();
-		JCheckBox blacksmith = new JCheckBox();
-		JCheckBox inn = new JCheckBox();
-		JCheckBox magicStore = new JCheckBox();
-		JCheckBox jewelryStore = new JCheckBox();
+		JCheckBox generalStore = new JCheckBox("General Store");
+		JCheckBox apothecary = new JCheckBox("Apothecary");
+		JCheckBox blacksmith = new JCheckBox("Blacksmith");
+		JCheckBox inn = new JCheckBox("Inn");
+		JCheckBox magicStore = new JCheckBox("Magic Store");
+		JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
 		checkPanel.add(generalStore);
+		checkPanel.add(apothecary);
+		checkPanel.add(blacksmith);
+		checkPanel.add(inn);
+		checkPanel.add(magicStore);
+		checkPanel.add(jewelryStore);
+		menuPanel.add(checkPanel);
 	}
 
 	protected void redrawnodes() {
