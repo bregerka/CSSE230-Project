@@ -17,10 +17,10 @@ public class Graph<T> {
 	private int numEdges;
 	private double maxDistance;
 	private double maxTime;
-	private ImageExample imagee;
+	private ImageExample imageEx;
 
 	public Graph(ImageExample imageExample) {
-		this.imagee = imageExample;
+		this.imageEx = imageExample;
 		this.nodes = new Hashtable<T, Node>();
 		this.numNodes = 0;
 		this.numEdges = 0;
@@ -74,11 +74,10 @@ public class Graph<T> {
 		private Image image;
 		private int Zoom;
 		private int tttt;
-		private JButton yyyy;
-		private JPanel ea;
-		private 
-		int xxx;
-		int yyy;
+		private JButton nodeButton;
+		private JPanel nodePanel;
+		private int xBorder;
+		private int yBorder;
 
 		public Node(T e, Coordinate location) {
 			loadImage();
@@ -93,17 +92,17 @@ public class Graph<T> {
 			this.numRatings = 0;
 			this.rating = 0;
 			setVisible(true);
-			yyyy = new JButton(e.toString());
-			yyyy.setOpaque(false);
-			yyyy.setContentAreaFilled(false);
-			yyyy.setBorderPainted(false);
-			yyyy.setForeground(Color.BLUE);
-			yyyy.addActionListener(new ActionListener() {
+			nodeButton = new JButton(e.toString());
+			nodeButton.setOpaque(false);
+			nodeButton.setContentAreaFilled(false);
+			nodeButton.setBorderPainted(false);
+			nodeButton.setForeground(Color.BLUE);
+			nodeButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					System.out.println("g");
-					imagee.q.offer(Node.this);
+					imageEx.q.offer(Node.this);
 
 				}
 			});
@@ -112,8 +111,8 @@ public class Graph<T> {
 
 		private void loadImage() {
 
-			ImageIcon ii = new ImageIcon("src\\icon.png");
-			image = ii.getImage();
+			ImageIcon imagIcon = new ImageIcon("src\\icon.png");
+			image = imagIcon.getImage();
 
 		}
 
@@ -132,15 +131,15 @@ public class Graph<T> {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			xxx = ((imagee.map.x * 2 + c.getX() * imagee.Zoom / 1000));
-			yyy = ((imagee.map.y * 2 + c.getY() * imagee.Zoom / 1000));
+			xBorder = ((imageEx.map.x * 2 + c.getX() * imageEx.Zoom / 1000));
+			yBorder = ((imageEx.map.y * 2 + c.getY() * imageEx.Zoom / 1000));
 
-			if (xxx < 1500 && yyy < 1000  && xxx > 0 && yyy > 0) {
+			if (xBorder < 1500 && yBorder < 1000  && xBorder > 0 && yBorder > 0) {
 				
-				setBounds(xxx, yyy, 60, 60);
+				setBounds(xBorder, yBorder, 60, 60);
 				g.drawImage(image, 20, 30, 20, 20, null);
-				this.add(yyyy);
-			} else this.remove(yyyy);
+				this.add(nodeButton);
+			} else this.remove(nodeButton);
 
 		}
 
