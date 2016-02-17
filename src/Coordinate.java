@@ -12,6 +12,7 @@ public class Coordinate {
 	public int getY(){
 		return this.y;
 	}
+	
 	public int distanceTo(Coordinate c2){
 		int dx = this.x - c2.x;
 		int dy = this.y - c2.y;

@@ -32,7 +32,6 @@ public class Map extends JPanel {
         loadImage();
         w = bardejov.getWidth(this);
         h =  bardejov.getHeight(this);
-        setSize( 1221, 858 );
         ww=w;
         hh=h;
  

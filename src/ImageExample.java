@@ -27,7 +27,7 @@ public class ImageExample extends JFrame {
 	int xx;
 	int yy;
 	private Graph newMap;
-	public static int Zoom = 1500;
+	public static int Zoom = 1000;
 	static Map thing;
 
 	public ImageExample() {
@@ -36,11 +36,25 @@ public class ImageExample extends JFrame {
 	}
 
 	public void initUI() {
-
+		setResizable(false);
 		String bl = null;
 		newMap = new Graph(this);
-		newMap.addNode("ded", new Coordinate(700, 200));
-		newMap.addNode("ded3", new Coordinate(500, 500));
+		newMap.addNode("DawnStar", new Coordinate(665, 128));
+		newMap.addNode("Falkreath", new Coordinate(550, 650));
+		newMap.addNode("Markarth", new Coordinate(107, 434));
+		newMap.addNode("Morthal", new Coordinate(482, 263));
+		newMap.addNode("Riften", new Coordinate(1052, 692));
+		newMap.addNode("Solitude", new Coordinate(434, 137));
+		newMap.addNode("WhiteRun", new Coordinate(623, 459));
+		newMap.addNode("Windhelm", new Coordinate(946, 359));
+		newMap.addNode("WinterHold", new Coordinate(868, 135));
+		newMap.addNode("Dragon Bridge", new Coordinate(308, 223));
+		newMap.addNode("Helgen", new Coordinate(634, 664));
+		newMap.addNode("Ivarstead", new Coordinate(785, 610));
+		newMap.addNode("Karthwasten", new Coordinate(230, 346));
+		newMap.addNode("Riverwood", new Coordinate(642, 560));
+		newMap.addNode("Rorikstead", new Coordinate(338, 398));
+		newMap.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menupanel = new JPanel();
 		JComboBox Combobox = new JComboBox();
@@ -100,7 +114,7 @@ public class ImageExample extends JFrame {
 		thing.setLayout(new GridLayout(1221, 858));
 
 		SearchPanel.add(SearchWindow);
-		JSlider ZoomScroll = new JSlider(1000, 3000);
+		JSlider ZoomScroll = new JSlider(1000, 3000, 1000);
 
 		ZoomScroll.addChangeListener(new ChangeListener() {
 			Map thingy = thing;
@@ -143,11 +157,9 @@ public class ImageExample extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				thing.x += e.getX() - xx;
 				thing.y += e.getY() - yy;
-				Enumeration<JButton> afd = newMap.nodes.elements();
-
-			
+				System.out.println(e.getX());
+				System.out.println(e.getY());
 				repaint();
-				revalidate();
 
 			}
 
@@ -182,8 +194,6 @@ public class ImageExample extends JFrame {
 		testpanel.setLayout(null);
 
 		redrawnodes();
-
-		
 
 		setSize(1500, 1000);
 		setTitle("Map");

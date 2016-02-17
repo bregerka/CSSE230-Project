@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -8,8 +9,9 @@ import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
-public class Graph<T>  {
+public class Graph<T> {
 	Hashtable<T, Node> nodes;
 	private int numNodes;
 	private int numEdges;
@@ -58,8 +60,8 @@ public class Graph<T>  {
 		this.maxTime = x;
 	}
 
-	class Node extends JButton  {
-		
+	class Node extends JPanel {
+
 		private T element;
 		private ArrayList<Edge> neighbors;
 		private double rating;
@@ -67,33 +69,46 @@ public class Graph<T>  {
 		private Coordinate c;
 		private Image image;
 		private int Zoom;
+		private int tttt;
+		private JButton yyyy;
+		private JPanel ea;
+		private 
+		int xxx;
+		int yyy;
 
 		public Node(T e, Coordinate location) {
-			
 			loadImage();
-			setSize(20,20);
+			setSize(40, 40);
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
 			this.numRatings = 0;
 			this.rating = 0;
 			setVisible(true);
-			addActionListener(new ActionListener() {
-				
+			yyyy = new JButton(e.toString());
+			yyyy.setOpaque(false);
+			yyyy.setContentAreaFilled(false);
+			yyyy.setBorderPainted(false);
+			yyyy.setForeground(Color.BLUE);
+			yyyy.addActionListener(new ActionListener() {
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					System.out.println("g");
 					imagee.q.offer(Node.this);
-					
+
 				}
 			});
+			
 		}
-	    private void loadImage() {
-	        
-	        ImageIcon ii = new ImageIcon("src\\icon.png");
-	        image = ii.getImage();        
-	     
-	    }
+
+		private void loadImage() {
+
+			ImageIcon ii = new ImageIcon("src\\icon.png");
+			image = ii.getImage();
+
+		}
+
 		public void addEdge(T e) {
 			Node otherNode = nodes.get(e);
 			double cost = this.c.distanceTo(otherNode.c);
@@ -107,14 +122,22 @@ public class Graph<T>  {
 			return this.rating;
 		}
 
-	
-
 		@Override
 		public void paintComponent(Graphics g) {
-			setBounds((imagee.thing.x*2 + c.getX()*imagee.Zoom/1000), 
-					(imagee.thing.y*2 + c.getY()*imagee.Zoom/1000), 20, 20);
-			g.drawImage(image, 0,0,20,20, null);
-			
+			xxx = ((imagee.thing.x * 2 + c.getX() * imagee.Zoom / 1000));
+			yyy = ((imagee.thing.y * 2 + c.getY() * imagee.Zoom / 1000));
+
+			if (xxx < 1500 && yyy < 1000  && xxx > 0 && yyy > 0) {
+				
+				setBounds(xxx, yyy, 60, 60);
+				g.drawImage(image, 20, 30, 20, 20, null);
+				this.add(yyyy);
+			} else this.remove(yyyy);
+
+		}
+
+		public void changetttt(int t) {
+			tttt = t;
 		}
 
 	}
@@ -140,7 +163,5 @@ public class Graph<T>  {
 			return this.costFxn.timeCost;
 		}
 	}
-
-
 
 }
