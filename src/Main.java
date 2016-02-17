@@ -36,7 +36,7 @@ public class Main extends JFrame {
 	
 	public Main() {
 		super("Testing");
-		Graph thisGraph = new Graph();
+//		Graph thisGraph = new Graph();
 		this.selectors = new JPanel(){
 			@Override
 			public void paintComponent(Graphics g)
