@@ -30,8 +30,8 @@ public class Graph<T> {
 		return nodes.toString();
 	}
 
-	public boolean addNode(T e, Coordinate c) {
-		this.nodes.put(e, new Node(e, c));
+	public boolean addNode(T e, Coordinate c,int[] i) {
+		this.nodes.put(e, new Node(e, c, i));
 		this.numNodes++;
 		return true;
 	}
@@ -61,7 +61,6 @@ public class Graph<T> {
 	}
 	
 	public String findMin(Node one, Node two){
-		
 		return "-1";
 	}
 
@@ -79,14 +78,17 @@ public class Graph<T> {
 		private JPanel nodePanel;
 		private int xBorder;
 		private int yBorder;
+		
+		int[] Matches ;
 
-		public Node(T e, Coordinate location) {
+		public Node(T e, Coordinate location, int[] matches) {
 			loadImage();
 
 			setSize(40, 40);
 
 			setSize(1, 1);
-
+			Matches = matches;
+			
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
@@ -164,8 +166,6 @@ public class Graph<T> {
 		}
 
 		public double distCost() {
-			
-			
 			return this.costFxn.distanceCost;
 		}
 
