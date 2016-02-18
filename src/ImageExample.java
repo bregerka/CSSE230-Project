@@ -41,7 +41,10 @@ public class ImageExample extends JFrame {
 		setResizable(false);
 		String bl = null;
 		newGraph = new Graph(this);
-		newGraph.addNode("DawnStar", new Coordinate(665, 128));
+		int[] f ={1,2,3,5,6,7};
+		
+//		newGraph.addNode("DawnStar", new Coordinate(665, 128),f);
+		
 		newGraph.addNode("Falkreath", new Coordinate(550, 650));
 		newGraph.addNode("Markarth", new Coordinate(107, 434));
 		newGraph.addNode("Morthal", new Coordinate(482, 263));
@@ -134,6 +137,31 @@ public class ImageExample extends JFrame {
 		});
 		menuPanel.setLayout(new BoxLayout(menuPanel, 1));
 		JButton SearchButton = new JButton("Search");
+		SearchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Enumeration<String> afd = newGraph.nodes.keys();
+
+				System.out.println(q.toString());
+				while (afd.hasMoreElements()) {
+					
+					String asd = afd.nextElement().toString();
+					if (SearchWindow.getText().equals(asd)){
+						q.offer((Graph.Node) newGraph.nodes.get(asd));
+						System.out.println(q.toString());
+						return;
+						
+					}  
+				}
+				
+				
+				
+				SearchWindow.setText("City not found");
+				
+				
+			}
+		});
 		JButton GoButton = new JButton("Go");
 		GoButton.addActionListener(new ActionListener() {
 
@@ -240,9 +268,40 @@ public class ImageExample extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-	
+
 	protected void checkCheckBoxes() {
-		
+		ArrayList isChecked = new ArrayList();
+		if (generalStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (apothecary.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (blacksmith.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (inn.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (magicStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (jewelryStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+
 	}
 
 	protected Object getRoadTripTextBox() {
@@ -250,19 +309,21 @@ public class ImageExample extends JFrame {
 		return null;
 	}
 
-	public void minimumDistance(){
-		
+	public void minimumDistance() {
+
 	}
+
 	
-	public void addCheckBoxes(JPanel menuPanel){
+	JCheckBox generalStore = new JCheckBox("General Store");
+	JCheckBox apothecary = new JCheckBox("Apothecary");
+	JCheckBox blacksmith = new JCheckBox("Blacksmith");
+	JCheckBox inn = new JCheckBox("Inn");
+	JCheckBox magicStore = new JCheckBox("Magic Store");
+	JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
+	public void addCheckBoxes(JPanel menuPanel) {
 		JPanel checkPanel = new JPanel();
-		checkPanel.setLayout(new GridLayout(6,2));
-		JCheckBox generalStore = new JCheckBox("General Store");
-		JCheckBox apothecary = new JCheckBox("Apothecary");
-		JCheckBox blacksmith = new JCheckBox("Blacksmith");
-		JCheckBox inn = new JCheckBox("Inn");
-		JCheckBox magicStore = new JCheckBox("Magic Store");
-		JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
+		checkPanel.setLayout(new GridLayout(6, 2));
+		
 		checkPanel.add(generalStore);
 		checkPanel.add(apothecary);
 		checkPanel.add(blacksmith);
