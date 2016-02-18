@@ -27,10 +27,10 @@ public class Graph<T> {
 	}
 
 	public String toString() {
-		return nodes.toString();
+		return this.nodes.toString();
 	}
 
-	public boolean addNode(T e, Coordinate c,int[] i) {
+	public boolean addNode(T e, Coordinate c, int[] i) {
 		this.nodes.put(e, new Node(e, c, i));
 		this.numNodes++;
 		return true;
@@ -59,68 +59,89 @@ public class Graph<T> {
 	public void setMaxTime(double x) {
 		this.maxTime = x;
 	}
-	
-	public String findMin(Node one, Node two){
+
+	public String findMin(Node one, Node two) {
 		return "-1";
 	}
 
 	class Node extends JPanel {
 
-		private T element;
+		T element;
 		private ArrayList<Edge> neighbors;
 		private double rating;
 		private int numRatings;
 		private Coordinate c;
 		private Image image;
 		private int Zoom;
-		private int tttt;
 		private JButton nodeButton;
-		private JPanel nodePanel;
+		JPanel nodePanel;
 		private int xBorder;
 		private int yBorder;
-		
-		int[] Matches ;
+
+		int[] Matches;
+		protected JButton newa;
 
 		public Node(T e, Coordinate location, int[] matches) {
 			loadImage();
-
-			setSize(40, 40);
+			this.newa = new JButton();
+			nodePanel = new JPanel();
+			this.newa.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Graph.this.imageEx.remove(Node.this.newa);
+					Graph.this.imageEx.repaint();
+					
+					
+				}
+			});
 
 			setSize(1, 1);
-			Matches = matches;
-			
+			this.Matches = matches;
+			this.newa = new JButton();
+			newa.setBounds(0, 0, 30, 30);
+
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
 			this.numRatings = 0;
 			this.rating = 0;
 			setVisible(true);
-			nodeButton = new JButton(e.toString());
-			nodeButton.setOpaque(false);
-			nodeButton.setContentAreaFilled(false);
-			nodeButton.setBorderPainted(false);
-			nodeButton.setForeground(Color.BLUE);
-			nodeButton.addActionListener(new ActionListener() {
+			this.nodeButton = new JButton(e.toString());
+			this.nodeButton.setOpaque(false);
+			this.nodeButton.setContentAreaFilled(false);
+			this.nodeButton.setBorderPainted(false);
+			this.nodeButton.setForeground(Color.BLUE);
+
+			this.nodeButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("g");
-					imageEx.q.offer(Node.this);
+					if (java.util.Arrays.asList(nodePanel.getComponents()).contains(newa)){
+						nodePanel.remove(newa);
+					}
+					else nodePanel.add(newa);
+					
+					if (Graph.this.imageEx.q.contains(Node.this.element.toString()))
+						Graph.this.imageEx.q.remove(Node.this.element.toString());
+					else
+						Graph.this.imageEx.q.offer(Node.this.element.toString());
+					Graph.this.imageEx.repaint();
 
 				}
 			});
-			
+
 		}
 
 		private void loadImage() {
 
 			ImageIcon imagIcon = new ImageIcon("src\\icon.png");
-			image = imagIcon.getImage();
+			this.image = imagIcon.getImage();
 
 		}
 
 		public void addEdge(T e) {
-			Node otherNode = nodes.get(e);
+			Node otherNode = Graph.this.nodes.get(e);
 			double cost = this.c.distanceTo(otherNode.c);
 			this.neighbors.add(new Edge(otherNode, cost));
 		}
@@ -134,20 +155,21 @@ public class Graph<T> {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			xBorder = ((imageEx.map.x * 2 + c.getX() * imageEx.Zoom / 1000));
-			yBorder = ((imageEx.map.y * 2 + c.getY() * imageEx.Zoom / 1000));
+			this.xBorder = ((Graph.this.imageEx.map.x * 2 + this.c.getX() * Graph.this.imageEx.Zoom / 1000));
+			this.yBorder = ((Graph.this.imageEx.map.y * 2 + this.c.getY() * Graph.this.imageEx.Zoom / 1000));
 
-			if (xBorder < 1500 && yBorder < 1000  && xBorder > 0 && yBorder > 0) {
-				
-				setBounds(xBorder, yBorder, 60, 60);
-				g.drawImage(image, 20, 30, 20, 20, null);
-				this.add(nodeButton);
-			} else this.remove(nodeButton);
+			if (this.xBorder < 1200 && this.yBorder < 850 && this.xBorder > 200 && this.yBorder > 0) {
+				setBounds(this.xBorder, this.yBorder, 80, 80);
+				if (Graph.this.imageEx.q.contains(this.element.toString())) {
+					this.nodeButton.setOpaque(true);
+					g.drawImage(this.image, 20, 30, 20, 20, null);
+				} else {
+					this.nodeButton.setOpaque(false);
+				}
+				this.add(this.nodeButton);
 
-		}
+			}
 
-		public void changetttt(int t) {
-			tttt = t;
 		}
 
 	}
@@ -174,8 +196,7 @@ public class Graph<T> {
 		}
 	}
 
-	public String roadTripCalculator(Node poll, Node poll2,
-			Object minimumTextBox) {
+	public String roadTripCalculator(String string, String string2, Object minimumTextBox) {
 		// TODO Auto-generated method stub.
 		return null;
 	}
