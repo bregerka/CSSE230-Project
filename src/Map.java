@@ -42,8 +42,6 @@ public class Map extends JPanel {
         
         ImageIcon ii = new ImageIcon("src\\Skyrim_Map.png");
         bardejov = ii.getImage();        
-       // setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
-     
     }
     
     @Override

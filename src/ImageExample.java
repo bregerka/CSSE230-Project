@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -25,12 +26,17 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ImageExample extends JFrame {
-	static Queue<Graph.Node> q = new LinkedList<Graph.Node>();
+	static Queue<String> q = new LinkedList<String>();
 	int xVariable;
 	int yVariable;
-	private Graph newGraph;
+	private Graph<String> newGraph;
+	private boolean checkboxeson;
+	private JPanel checkPanel;
+	JPanel menuPanel;
 	public static int Zoom = 1000;
 	static Map map;
+	static JTextField SearchWindow;
+	static JPanel temppanel;
 
 	public ImageExample() {
 
@@ -39,6 +45,31 @@ public class ImageExample extends JFrame {
 
 	public void initUI() {
 		setResizable(false);
+
+		this.newGraph = new Graph<String>(this);
+		setBackground(Color.BLACK);
+
+		this.newGraph.addNode("Dawnstar", new Coordinate(665, 128), new int[] { 0, 1, 1, 1, 0, 0 });
+		this.newGraph.addNode("Falkreath", new Coordinate(550, 650), new int[] { 1, 1, 1, 1, 0, 0 });
+		this.newGraph.addNode("Markarth", new Coordinate(107, 434), new int[] { 1, 1, 1, 1, 1, 1 });
+		this.newGraph.addNode("Morthal", new Coordinate(482, 263), new int[] { 0, 1, 0, 1, 1, 0 });
+		this.newGraph.addNode("Riften", new Coordinate(1052, 692), new int[] { 1, 1, 1, 1, 1, 1 });
+		this.newGraph.addNode("Solitude", new Coordinate(434, 137), new int[] { 1, 1, 1, 1, 1, 1 });
+		this.newGraph.addNode("Whiterun", new Coordinate(623, 459), new int[] { 1, 1, 1, 1, 1, 1 });
+		this.newGraph.addNode("Windhelm", new Coordinate(946, 359), new int[] { 1, 1, 1, 1, 1, 0 });
+		this.newGraph.addNode("Winterhold", new Coordinate(868, 135), new int[] { 1, 0, 0, 1, 1, 0 });
+		this.newGraph.addNode("Dragon Bridge", new Coordinate(308, 223), new int[] { 0, 0, 0, 1, 0, 0 });
+		this.newGraph.addNode("Helgen", new Coordinate(634, 664), new int[] { 0, 0, 0, 0, 0, 0 });
+		this.newGraph.addNode("Ivarstead", new Coordinate(785, 610), new int[] { 0, 0, 0, 1, 0, 0 });
+		this.newGraph.addNode("Karthwasten", new Coordinate(230, 346), new int[] { 0, 0, 0, 0, 0, 0 });
+		this.newGraph.addNode("Riverwood", new Coordinate(642, 560), new int[] { 1, 0, 1, 1, 0, 0 });
+		this.newGraph.addNode("Rorikstead", new Coordinate(338, 398), new int[] { 0, 0, 0, 1, 0, 0 });
+		this.newGraph.addNode("Shor's Stone", new Coordinate(1025, 623), new int[] { 0, 0, 1, 0, 0, 0 });
+
+		menuPanel = new JPanel();
+		JComboBox<String> Combobox = new JComboBox<String>();
+		SearchWindow = new JTextField("Find a Location...");
+
 		String bl = null;
 		newGraph = new Graph(this);
 		int[] f ={1,2,3,5,6,7};
@@ -62,9 +93,11 @@ public class ImageExample extends JFrame {
 		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menuPanel = new JPanel();
-		JComboBox Combobox = new JComboBox();
+//		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
+
 		JTextArea mainText = new JTextArea("Choose a function");
+		mainText.setEditable(false);
 		JPanel ComboPanel = new JPanel();
 		JPanel SearchPanel = new JPanel();
 		ComboPanel.add(Combobox);
@@ -72,25 +105,31 @@ public class ImageExample extends JFrame {
 		Combobox.addItem("Minimum Distance");
 		Combobox.addItem("Find Nearest");
 		Combobox.addItem("Plan Road Trip");
+		Combobox.addItem("Find close by towns");
+		
 		Combobox.addActionListener(new ActionListener() {
 
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				q.clear();
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
-					newGraph.nodes.clear();
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
+					
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+						menuPanel.remove(temppanel);
+					ImageExample.this.newGraph.nodes.clear();
 					mainText.setText("Choose 2 locations to find\nthe minimum distance between them.");
 				}
-				if (Combobox.getSelectedItem() == "Plan Road Trip") {
-					newGraph.nodes.clear();
-					mainText.setText("Get options for routes between two nodes.");
+				if (Combobox.getSelectedItem() == "Find close by towns") {
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
 					
-				}
-				if (Combobox.getSelectedItem() == "Find Nearest") {
-					newGraph.nodes.clear();
-					mainText.setText("Find the closest node with the feature(s) you specify.");
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+						menuPanel.remove(temppanel);
+					ImageExample.this.newGraph.nodes.clear();
+					mainText.setText("Find all cities under a certain\ndistance from you");
 					JTextField DistSearchWindow = new JTextField("Enter Length:");
-					JPanel temppanel = new JPanel();
+					temppanel = new JPanel();
 					menuPanel.add(temppanel);
 					menuPanel.remove(mainText);
 					temppanel.add(DistSearchWindow);
@@ -110,9 +149,31 @@ public class ImageExample extends JFrame {
 
 						}
 					});
+				}
+				if (Combobox.getSelectedItem() == "Plan Road Trip") {
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
+					
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+						menuPanel.remove(temppanel);
+					newGraph.nodes.clear();
+					mainText.setText("Get options for routes\nbetween two nodes.");
+
+				}
+				if (Combobox.getSelectedItem() == "Find Nearest") {
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
+					
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+						menuPanel.remove(temppanel);
+					ImageExample.this.newGraph.nodes.clear();
+					mainText.setText("Find the closest node with the\nfeature(s) you specify.");
+					addCheckBoxes(menuPanel);
 
 				}
 				if (Combobox.getSelectedItem() == "Select Option") {
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
+					
+					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+						menuPanel.remove(temppanel);
 					mainText.setText("Please Select Something to Do.");
 				}
 
@@ -131,35 +192,37 @@ public class ImageExample extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				extraMap.ChangeZoom((int) source.getValue());
+				this.extraMap.ChangeZoom((int) source.getValue());
 				repaint();
 			}
 		});
 		menuPanel.setLayout(new BoxLayout(menuPanel, 1));
 		JButton SearchButton = new JButton("Search");
 		SearchButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Enumeration<String> afd = newGraph.nodes.keys();
+				Enumeration<String> afd = ImageExample.this.newGraph.nodes.keys();
 
-				System.out.println(q.toString());
 				while (afd.hasMoreElements()) {
-					
+
 					String asd = afd.nextElement().toString();
-					if (SearchWindow.getText().equals(asd)){
-						q.offer((Graph.Node) newGraph.nodes.get(asd));
-						System.out.println(q.toString());
+					if (SearchWindow.getText().equals(asd)) {
+						if (q.contains(asd)) {
+							q.remove(asd);
+
+						}
+
+						else
+							q.offer(asd);
+						repaint();
 						return;
-						
-					}  
+
+					}
 				}
-				
-				
-				
+
 				SearchWindow.setText("City not found");
-				
-				
+
 			}
 		});
 		JButton GoButton = new JButton("Go");
@@ -175,8 +238,6 @@ public class ImageExample extends JFrame {
 						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
-						Queue save = q;
-						mainText.setText(newGraph.findMin(q.poll(),q.poll()));
 					}
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
@@ -184,24 +245,21 @@ public class ImageExample extends JFrame {
 						mainText.setText("Please select two nodes.");
 					}
 					if (q.size() == 1) {
-						mainText.setText("Please select 1 more node.");
+						System.out.println("Road Trip");
 					}
-					if (q.size() == 2) {
-						if (getRoadTripTextBox() == null) {
-							mainText.setText("Enter minimum travel distance.");
-						}
-						Queue save = q;
-						mainText.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getRoadTripTextBox()));
-					}
+
+					mainText.setText(
+							ImageExample.this.newGraph.roadTripCalculator(q.poll(), q.poll(), getRoadTripTextBox()));
+
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
 					if (q.size() == 0) {
 						mainText.setText("Please select a start node.");
 					}
 					if (q.size() == 1) {
-						mainText.setText("Check the boxes of the features you want from your destination.");
-						ArrayList checkBoxes = new ArrayList();
-						addCheckBoxes(menuPanel);
+						mainText.setText("Check the boxes of the features\nyou want from your destination.");
+						new ArrayList<Object>();
+
 						checkCheckBoxes();
 					}
 				}
@@ -219,35 +277,45 @@ public class ImageExample extends JFrame {
 
 		menuPanel.setBackground(Color.BLACK);
 		add(menuPanel, BorderLayout.WEST);
+		map.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub.
+
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+				map.x += e.getX() - ImageExample.this.xVariable;
+				map.y += e.getY() - ImageExample.this.yVariable;
+				repaint();
+
+			}
+		});
 		map.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				map.x += e.getX() - xVariable;
-				map.y += e.getY() - yVariable;
-				System.out.println(e.getX());
-				System.out.println(e.getY());
-				repaint();
+				redrawnodes();
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				xVariable = e.getX();
-				yVariable = e.getY();
+				ImageExample.this.xVariable = e.getX();
+				ImageExample.this.yVariable = e.getY();
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub.
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub.
-
 			}
 
 			@Override
@@ -267,6 +335,12 @@ public class ImageExample extends JFrame {
 		setTitle("Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+	}
+
+	protected void removeCheckBoxes() {
+		
+		// TODO Auto-generated method stub.
+		
 	}
 
 	protected void checkCheckBoxes() {
@@ -321,9 +395,17 @@ public class ImageExample extends JFrame {
 	JCheckBox magicStore = new JCheckBox("Magic Store");
 	JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
 	public void addCheckBoxes(JPanel menuPanel) {
-		JPanel checkPanel = new JPanel();
+		checkboxeson=true;
+		checkPanel = new JPanel();
 		checkPanel.setLayout(new GridLayout(6, 2));
-		
+
+		JCheckBox generalStore = new JCheckBox("general store");
+		JCheckBox apothecary = new JCheckBox("apothecary");
+		JCheckBox blacksmith = new JCheckBox("blacksmith");
+		JCheckBox inn = new JCheckBox("inn");
+		JCheckBox magicStore = new JCheckBox("magicStore");
+		JCheckBox jewelryStore = new JCheckBox("jewelryStore");
+
 		checkPanel.add(generalStore);
 		checkPanel.add(apothecary);
 		checkPanel.add(blacksmith);
@@ -334,13 +416,12 @@ public class ImageExample extends JFrame {
 	}
 
 	protected void redrawnodes() {
-		Enumeration<JButton> afd = newGraph.nodes.elements();
+		Enumeration<Graph<String>.Node> afd = this.newGraph.nodes.elements();
 
 		while (afd.hasMoreElements()) {
 			add(afd.nextElement());
 		}
 		add(map);
-		setVisible(true);
 
 	}
 
