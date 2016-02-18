@@ -73,7 +73,6 @@ public class Graph<T> {
 		private Coordinate c;
 		private Image image;
 		private int Zoom;
-		private int tttt;
 		private JButton nodeButton;
 		private JPanel nodePanel;
 		private int xBorder;
@@ -143,9 +142,6 @@ public class Graph<T> {
 
 		}
 
-		public void changetttt(int t) {
-			tttt = t;
-		}
 
 	}
 

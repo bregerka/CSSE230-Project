@@ -26,8 +26,8 @@ import javax.swing.event.ChangeListener;
 
 public class ImageExample extends JFrame {
 	static Queue<Graph.Node> q = new LinkedList<Graph.Node>();
-	int xx;
-	int yy;
+	int xVariable;
+	int yVariable;
 	private Graph newGraph;
 	public static int Zoom = 1000;
 	static Map map;
@@ -58,11 +58,10 @@ public class ImageExample extends JFrame {
 		newGraph.addNode("Rorikstead", new Coordinate(338, 398));
 		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
-		JPanel menupanel = new JPanel();
+		JPanel menuPanel = new JPanel();
 		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
-		JTextArea nnn = new JTextArea("Choose a function");
-		System.out.println(menupanel.getBackground());
+		JTextArea mainText = new JTextArea("Choose a function");
 		JPanel ComboPanel = new JPanel();
 		JPanel SearchPanel = new JPanel();
 		ComboPanel.add(Combobox);
@@ -77,31 +76,32 @@ public class ImageExample extends JFrame {
 
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					newGraph.nodes.clear();
-					nnn.setText("Choose 2 locations to find\nthe minimum distance between them.");
+					mainText.setText("Choose 2 locations to find\nthe minimum distance between them.");
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
 					newGraph.nodes.clear();
-					nnn.setText("Get options for routes between two nodes.");
+					mainText.setText("Get options for routes between two nodes.");
+					
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
 					newGraph.nodes.clear();
-					nnn.setText("Find the closest node with the feature(s) you specify.");
+					mainText.setText("Find the closest node with the feature(s) you specify.");
 					JTextField DistSearchWindow = new JTextField("Enter Length:");
 					JPanel temppanel = new JPanel();
-					menupanel.add(temppanel);
-					menupanel.remove(nnn);
+					menuPanel.add(temppanel);
+					menuPanel.remove(mainText);
 					temppanel.add(DistSearchWindow);
 					JButton newb = new JButton("Find");
 					temppanel.add(newb);
-					menupanel.add(nnn);
+					menuPanel.add(mainText);
 					newb.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (Integer.parseInt(DistSearchWindow.getText()) > 0
 									|| Integer.parseInt(DistSearchWindow.getText()) < 2000) {
-								nnn.setText("Enter New Length:");
-								// menupanel.remove(temppanel);
+								mainText.setText("Enter New Length:");
+								// menuPanel.remove(temppanel);
 
 							}
 
@@ -110,7 +110,7 @@ public class ImageExample extends JFrame {
 
 				}
 				if (Combobox.getSelectedItem() == "Select Option") {
-					nnn.setText("Please Select Something to Do:");
+					mainText.setText("Please Select Something to Do.");
 				}
 
 			}
@@ -123,16 +123,16 @@ public class ImageExample extends JFrame {
 		JSlider ZoomScroll = new JSlider(1000, 3000, 1000);
 
 		ZoomScroll.addChangeListener(new ChangeListener() {
-			Map thingy = map;
+			Map extraMap = map;
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				thingy.ChangeZoom((int) source.getValue());
+				extraMap.ChangeZoom((int) source.getValue());
 				repaint();
 			}
 		});
-		menupanel.setLayout(new BoxLayout(menupanel, 1));
+		menuPanel.setLayout(new BoxLayout(menuPanel, 1));
 		JButton SearchButton = new JButton("Search");
 		JButton GoButton = new JButton("Go");
 		GoButton.addActionListener(new ActionListener() {
@@ -141,61 +141,62 @@ public class ImageExample extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
-						nnn.setText("Please select two nodes.");
+						mainText.setText("Please select two nodes.");
 					}
 					if (q.size() == 1) {
-						nnn.setText("Please select 1 more node.");
+						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
 						Queue save = q;
-						nnn.setText(newGraph.findMin(q.poll(),q.poll()));
+						mainText.setText(newGraph.findMin(q.poll(),q.poll()));
 					}
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
 					if (q.size() == 0) {
-						nnn.setText("Please select two nodes.");
+						mainText.setText("Please select two nodes.");
 					}
 					if (q.size() == 1) {
-						nnn.setText("Please select 1 more node.");
+						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
 						if (getRoadTripTextBox() == null) {
-							nnn.setText("Enter minimum travel distance.");
+							mainText.setText("Enter minimum travel distance.");
 						}
 						Queue save = q;
-						nnn.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getRoadTripTextBox()));
+						mainText.setText(newGraph.roadTripCalculator(q.poll(),q.poll(),getRoadTripTextBox()));
 					}
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
 					if (q.size() == 0) {
-						nnn.setText("Please select a start node.");
+						mainText.setText("Please select a start node.");
 					}
 					if (q.size() == 1) {
-						nnn.setText("Check the boxes of the features you want from your destination.");
+						mainText.setText("Check the boxes of the features you want from your destination.");
 						ArrayList checkBoxes = new ArrayList();
-						addCheckBoxes(menupanel);
+						addCheckBoxes(menuPanel);
+						checkCheckBoxes();
 					}
 				}
 
 			}
 		});
-		menupanel.add(ZoomScroll);
+		menuPanel.add(ZoomScroll);
 		SearchPanel.add(SearchButton);
-		menupanel.add(SearchPanel);
+		menuPanel.add(SearchPanel);
 
-		menupanel.add(ComboPanel);
+		menuPanel.add(ComboPanel);
 		ComboPanel.add(GoButton);
 
-		menupanel.add(nnn);
+		menuPanel.add(mainText);
 
-		menupanel.setBackground(Color.BLACK);
-		add(menupanel, BorderLayout.WEST);
+		menuPanel.setBackground(Color.BLACK);
+		add(menuPanel, BorderLayout.WEST);
 		map.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				map.x += e.getX() - xx;
-				map.y += e.getY() - yy;
+				map.x += e.getX() - xVariable;
+				map.y += e.getY() - yVariable;
 				System.out.println(e.getX());
 				System.out.println(e.getY());
 				repaint();
@@ -205,8 +206,8 @@ public class ImageExample extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				xx = e.getX();
-				yy = e.getY();
+				xVariable = e.getX();
+				yVariable = e.getY();
 			}
 
 			@Override
@@ -234,12 +235,16 @@ public class ImageExample extends JFrame {
 
 		redrawnodes();
 
-		setSize(1500, 1000);
+		setSize(1300, 900);
 		setTitle("Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
 	
+	protected void checkCheckBoxes() {
+		
+	}
+
 	protected Object getRoadTripTextBox() {
 		// TODO Auto-generated method stub.
 		return null;
