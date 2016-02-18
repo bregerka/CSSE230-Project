@@ -61,6 +61,7 @@ public class ImageExample extends JFrame {
 		JPanel menupanel = new JPanel();
 		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
+		
 		JTextArea nnn = new JTextArea("Choose a function");
 		System.out.println(menupanel.getBackground());
 		JPanel ComboPanel = new JPanel();
@@ -99,7 +100,7 @@ public class ImageExample extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (Integer.parseInt(DistSearchWindow.getText()) > 0
-									|| Integer.parseInt(DistSearchWindow.getText()) < 2000) {
+									&& Integer.parseInt(DistSearchWindow.getText()) < 2000) {
 								nnn.setText("Enter New Length:");
 								// menupanel.remove(temppanel);
 
@@ -186,7 +187,16 @@ public class ImageExample extends JFrame {
 		menupanel.add(ComboPanel);
 		ComboPanel.add(GoButton);
 
-		menupanel.add(nnn);
+		JPanel fasf = new JPanel();
+		fasf.add(nnn);
+		
+		
+		menupanel.add(fasf);
+		JPanel a = new JPanel();
+	//	a.setLayout(null);
+		a.setSize(100,900);
+	//	a.setBounds(0, 0, 100,900);
+		menupanel.add(a);
 
 		menupanel.setBackground(Color.BLACK);
 		add(menupanel, BorderLayout.WEST);

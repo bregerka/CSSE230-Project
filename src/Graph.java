@@ -61,6 +61,7 @@ public class Graph<T> {
 	}
 	
 	public String findMin(Node one, Node two){
+		
 		return "-1";
 	}
 
@@ -163,6 +164,8 @@ public class Graph<T> {
 		}
 
 		public double distCost() {
+			
+			
 			return this.costFxn.distanceCost;
 		}
 
