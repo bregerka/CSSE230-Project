@@ -45,6 +45,7 @@ public class ImageExample extends JFrame {
 
 	public void initUI() {
 		setResizable(false);
+<<<<<<< HEAD
 		this.newGraph = new Graph<String>(this);
 		setBackground(Color.BLACK);
 
@@ -68,6 +69,33 @@ public class ImageExample extends JFrame {
 		menuPanel = new JPanel();
 		JComboBox<String> Combobox = new JComboBox<String>();
 		SearchWindow = new JTextField("Find a Location...");
+=======
+		String bl = null;
+		newGraph = new Graph(this);
+		int[] f ={1,2,3,5,6,7};
+		
+//		newGraph.addNode("DawnStar", new Coordinate(665, 128),f);
+		
+		newGraph.addNode("Falkreath", new Coordinate(550, 650));
+		newGraph.addNode("Markarth", new Coordinate(107, 434));
+		newGraph.addNode("Morthal", new Coordinate(482, 263));
+		newGraph.addNode("Riften", new Coordinate(1052, 692));
+		newGraph.addNode("Solitude", new Coordinate(434, 137));
+		newGraph.addNode("WhiteRun", new Coordinate(623, 459));
+		newGraph.addNode("Windhelm", new Coordinate(946, 359));
+		newGraph.addNode("WinterHold", new Coordinate(868, 135));
+		newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
+		newGraph.addNode("Helgen", new Coordinate(634, 664));
+		newGraph.addNode("Ivarstead", new Coordinate(785, 610));
+		newGraph.addNode("Karthwasten", new Coordinate(230, 346));
+		newGraph.addNode("Riverwood", new Coordinate(642, 560));
+		newGraph.addNode("Rorikstead", new Coordinate(338, 398));
+		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
+
+		JPanel menuPanel = new JPanel();
+		JComboBox Combobox = new JComboBox();
+		JTextField SearchWindow = new JTextField("Find a Location...");
+>>>>>>> origin/master
 		JTextArea mainText = new JTextArea("Choose a function");
 		mainText.setEditable(false);
 		JPanel ComboPanel = new JPanel();
@@ -316,7 +344,37 @@ public class ImageExample extends JFrame {
 	}
 
 	protected void checkCheckBoxes() {
-		// TODO Auto-generated method stub.
+		ArrayList isChecked = new ArrayList();
+		if (generalStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (apothecary.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (blacksmith.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (inn.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (magicStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
+		if (jewelryStore.isSelected()) {
+			isChecked.add(1);
+		} else {
+			isChecked.add(0);
+		}
 
 	}
 
@@ -329,16 +387,27 @@ public class ImageExample extends JFrame {
 
 	}
 
+	
+	JCheckBox generalStore = new JCheckBox("General Store");
+	JCheckBox apothecary = new JCheckBox("Apothecary");
+	JCheckBox blacksmith = new JCheckBox("Blacksmith");
+	JCheckBox inn = new JCheckBox("Inn");
+	JCheckBox magicStore = new JCheckBox("Magic Store");
+	JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
 	public void addCheckBoxes(JPanel menuPanel) {
 		checkboxeson=true;
 		checkPanel = new JPanel();
 		checkPanel.setLayout(new GridLayout(6, 2));
+<<<<<<< HEAD
 		JCheckBox generalStore = new JCheckBox("general store");
 		JCheckBox apothecary = new JCheckBox("apothecary");
 		JCheckBox blacksmith = new JCheckBox("blacksmith");
 		JCheckBox inn = new JCheckBox("inn");
 		JCheckBox magicStore = new JCheckBox("magicStore");
 		JCheckBox jewelryStore = new JCheckBox("jewelryStore");
+=======
+		
+>>>>>>> origin/master
 		checkPanel.add(generalStore);
 		checkPanel.add(apothecary);
 		checkPanel.add(blacksmith);
