@@ -31,11 +31,21 @@ public class Graph<T> {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public boolean addNode(T e, Coordinate c, int[] i) {
 		this.nodes.put(e, new Node(e, c, i));
 =======
 	public boolean addNode(T e, Coordinate c) {
 		this.nodes.put(e, new Node(e, c));
+>>>>>>> origin/master
+=======
+
+	public boolean addNode(T e, Coordinate c, int[] i) {
+		this.nodes.put(e, new Node(e, c, i));
+
+	public boolean addNode(T e, Coordinate c) {
+		this.nodes.put(e, new Node(e, c));
+
 >>>>>>> origin/master
 		this.numNodes++;
 		return true;
@@ -89,6 +99,10 @@ public class Graph<T> {
 =======
 >>>>>>> origin/master
 
+
+		int[] Matches;
+		protected JButton newa;
+
 		public Node(T e, Coordinate location) {
 			loadImage();
 			this.newa = new JButton();
@@ -111,6 +125,11 @@ public class Graph<T> {
 			newa.setBounds(0, 0, 30, 30);
 =======
 >>>>>>> origin/master
+
+//			this.Matches = matches;
+			this.newa = new JButton();
+			newa.setBounds(0, 0, 30, 30);
+
 
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
@@ -182,8 +201,13 @@ public class Graph<T> {
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		}
 =======
+>>>>>>> origin/master
+=======
+
+		}
 >>>>>>> origin/master
 
 	}

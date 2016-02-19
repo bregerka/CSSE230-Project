@@ -46,6 +46,10 @@ public class ImageExample extends JFrame {
 	public void initUI() {
 		setResizable(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 		this.newGraph = new Graph<String>(this);
 		setBackground(Color.BLACK);
 
@@ -69,7 +73,11 @@ public class ImageExample extends JFrame {
 		menuPanel = new JPanel();
 		JComboBox<String> Combobox = new JComboBox<String>();
 		SearchWindow = new JTextField("Find a Location...");
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> origin/master
 		String bl = null;
 		newGraph = new Graph(this);
 		int[] f ={1,2,3,5,6,7};
@@ -93,8 +101,12 @@ public class ImageExample extends JFrame {
 		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menuPanel = new JPanel();
-		JComboBox Combobox = new JComboBox();
+//		JComboBox Combobox = new JComboBox();
 		JTextField SearchWindow = new JTextField("Find a Location...");
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+
 >>>>>>> origin/master
 		JTextArea mainText = new JTextArea("Choose a function");
 		mainText.setEditable(false);
@@ -399,14 +411,22 @@ public class ImageExample extends JFrame {
 		checkPanel = new JPanel();
 		checkPanel.setLayout(new GridLayout(6, 2));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 		JCheckBox generalStore = new JCheckBox("general store");
 		JCheckBox apothecary = new JCheckBox("apothecary");
 		JCheckBox blacksmith = new JCheckBox("blacksmith");
 		JCheckBox inn = new JCheckBox("inn");
 		JCheckBox magicStore = new JCheckBox("magicStore");
 		JCheckBox jewelryStore = new JCheckBox("jewelryStore");
+<<<<<<< HEAD
 =======
 		
+>>>>>>> origin/master
+=======
+
 >>>>>>> origin/master
 		checkPanel.add(generalStore);
 		checkPanel.add(apothecary);
