@@ -76,7 +76,7 @@ public class Graph<T> {
 
 		T element;
 		private ArrayList<Edge> neighbors;
-		private ArrayList<Node> nodeNeighbors;
+		public ArrayList<Node> nodeNeighbors;
 		private double rating;
 		private int numRatings;
 		private Coordinate c;

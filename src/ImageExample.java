@@ -50,7 +50,7 @@ public class ImageExample extends JFrame {
 
 		this.newGraph.addNode("Dawnstar", new Coordinate(665, 128), new int[] { 0, 1, 1, 1, 0, 0 });
 		this.newGraph.addNode("Falkreath", new Coordinate(550, 650), new int[] { 1, 1, 1, 1, 0, 0 });
-		this.newGraph.addNode("Markarth", new Coordinate(107, 434), new int[] { 1, 1, 1, 1, 1, 1 });
+		this.newGraph.addNode("Markarth", new Coordinate(250, 434), new int[] { 1, 1, 1, 1, 1, 1 });
 		this.newGraph.addNode("Morthal", new Coordinate(482, 263), new int[] { 0, 1, 0, 1, 1, 0 });
 		this.newGraph.addNode("Riften", new Coordinate(1052, 692), new int[] { 1, 1, 1, 1, 1, 1 });
 		this.newGraph.addNode("Solitude", new Coordinate(434, 137), new int[] { 1, 1, 1, 1, 1, 1 });
@@ -64,7 +64,67 @@ public class ImageExample extends JFrame {
 		this.newGraph.addNode("Riverwood", new Coordinate(642, 560), new int[] { 1, 0, 1, 1, 0, 0 });
 		this.newGraph.addNode("Rorikstead", new Coordinate(338, 398), new int[] { 0, 0, 0, 1, 0, 0 });
 		this.newGraph.addNode("Shor's Stone", new Coordinate(1025, 623), new int[] { 0, 0, 1, 0, 0, 0 });
-
+		newGraph.getNode("Dawnstar").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Falkreath").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Markarth").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Morthal").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Riften").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Solitude").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Whiterun").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Windhelm").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Winterhold").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Dragon Bridge").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Helgen").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Ivarstead").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Karthwasten").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Riverwood").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Rorikstead").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Shor's Stone").nodeNeighbors = new ArrayList();
+		newGraph.getNode("Dawnstar").nodeNeighbors.add(newGraph.getNode("Solitude"));
+		newGraph.getNode("Dawnstar").nodeNeighbors.add(newGraph.getNode("Winterhold"));
+		newGraph.getNode("Falkreath").nodeNeighbors.add(newGraph.getNode("Rorikstead"));
+		newGraph.getNode("Falkreath").nodeNeighbors.add(newGraph.getNode("Riverwood"));
+		newGraph.getNode("Falkreath").nodeNeighbors.add(newGraph.getNode("Helgen"));
+		newGraph.getNode("Markarth").nodeNeighbors.add(newGraph.getNode("Karthwasten"));
+		newGraph.getNode("Morthal").nodeNeighbors.add(newGraph.getNode("Solitude"));
+		newGraph.getNode("Morthal").nodeNeighbors.add(newGraph.getNode("Dragon Bridge"));
+		newGraph.getNode("Morthal").nodeNeighbors.add(newGraph.getNode("Rorikstead"));
+		newGraph.getNode("Morthal").nodeNeighbors.add(newGraph.getNode("Whiterun"));
+		newGraph.getNode("Riften").nodeNeighbors.add(newGraph.getNode("Shor's Stone"));
+		newGraph.getNode("Riften").nodeNeighbors.add(newGraph.getNode("Ivarstead"));
+		newGraph.getNode("Solitude").nodeNeighbors.add(newGraph.getNode("Dawnstar"));
+		newGraph.getNode("Solitude").nodeNeighbors.add(newGraph.getNode("Morthal"));
+		newGraph.getNode("Solitude").nodeNeighbors.add(newGraph.getNode("Dragon Bridge"));
+		newGraph.getNode("Whiterun").nodeNeighbors.add(newGraph.getNode("Morthal"));
+		newGraph.getNode("Whiterun").nodeNeighbors.add(newGraph.getNode("Rorikstead"));
+		newGraph.getNode("Whiterun").nodeNeighbors.add(newGraph.getNode("Riverwood"));
+		newGraph.getNode("Whiterun").nodeNeighbors.add(newGraph.getNode("Windhelm"));
+		newGraph.getNode("Windhelm").nodeNeighbors.add(newGraph.getNode("Winterhold"));
+		newGraph.getNode("Windhelm").nodeNeighbors.add(newGraph.getNode("Whiterun"));
+		newGraph.getNode("Windhelm").nodeNeighbors.add(newGraph.getNode("Shor's Stone"));
+		newGraph.getNode("Winterhold").nodeNeighbors.add(newGraph.getNode("Dawnstar"));
+		newGraph.getNode("Winterhold").nodeNeighbors.add(newGraph.getNode("Windhelm"));
+		newGraph.getNode("Dragon Bridge").nodeNeighbors.add(newGraph.getNode("Solitude"));
+		newGraph.getNode("Dragon Bridge").nodeNeighbors.add(newGraph.getNode("Morthal"));
+		newGraph.getNode("Dragon Bridge").nodeNeighbors.add(newGraph.getNode("Karthwasten"));
+		newGraph.getNode("Helgen").nodeNeighbors.add(newGraph.getNode("Falkreath"));
+		newGraph.getNode("Helgen").nodeNeighbors.add(newGraph.getNode("Ivarstead"));
+		newGraph.getNode("Ivarstead").nodeNeighbors.add(newGraph.getNode("Riverwood"));
+		newGraph.getNode("Ivarstead").nodeNeighbors.add(newGraph.getNode("Riften"));
+		newGraph.getNode("Ivarstead").nodeNeighbors.add(newGraph.getNode("Helgen"));
+		newGraph.getNode("Karthwasten").nodeNeighbors.add(newGraph.getNode("Dragon Bridge"));
+		newGraph.getNode("Karthwasten").nodeNeighbors.add(newGraph.getNode("Rorikstead"));
+		newGraph.getNode("Karthwasten").nodeNeighbors.add(newGraph.getNode("Markarth"));
+		newGraph.getNode("Riverwood").nodeNeighbors.add(newGraph.getNode("Whiterun"));
+		newGraph.getNode("Riverwood").nodeNeighbors.add(newGraph.getNode("Ivarstead"));
+		newGraph.getNode("Riverwood").nodeNeighbors.add(newGraph.getNode("Falkreath"));
+		newGraph.getNode("Rorikstead").nodeNeighbors.add(newGraph.getNode("Karthwasten"));
+		newGraph.getNode("Rorikstead").nodeNeighbors.add(newGraph.getNode("Morthal"));
+		newGraph.getNode("Rorikstead").nodeNeighbors.add(newGraph.getNode("Whiterun"));
+		newGraph.getNode("Rorikstead").nodeNeighbors.add(newGraph.getNode("Falkreath"));
+		newGraph.getNode("Shor's Stone").nodeNeighbors.add(newGraph.getNode("Windhelm"));
+		newGraph.getNode("Shor's Stone").nodeNeighbors.add(newGraph.getNode("Riften"));
+		
 		menuPanel = new JPanel();
 		JComboBox<String> Combobox = new JComboBox<String>();
 		SearchWindow = new JTextField("Find a Location...");
@@ -104,7 +164,7 @@ public class ImageExample extends JFrame {
 		Combobox.addItem("Minimum Distance");
 		Combobox.addItem("Find Nearest");
 		Combobox.addItem("Plan Road Trip");
-		Combobox.addItem("Find close by towns");
+//		Combobox.addItem("Find close by towns");
 		
 		Combobox.addActionListener(new ActionListener() {
 
@@ -120,17 +180,17 @@ public class ImageExample extends JFrame {
 					ImageExample.this.newGraph.nodes.clear();
 					mainText.setText("Choose 2 locations to find\nthe minimum distance between them.");
 				}
-				if (Combobox.getSelectedItem() == "Find close by towns") {
-					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
-					
-					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
-						menuPanel.remove(temppanel);
-					ImageExample.this.newGraph.nodes.clear();
-					mainText.setText("Find all cities under a certain\ndistance from you");
-					
-					
-					
-				}
+//				if (Combobox.getSelectedItem() == "Find close by towns") {
+//					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
+//					
+//					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
+//						menuPanel.remove(temppanel);
+//					ImageExample.this.newGraph.nodes.clear();
+//					mainText.setText("Find all cities under a certain\ndistance from you");
+//					
+//					
+//					
+//				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
 					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
 					
@@ -240,13 +300,14 @@ public class ImageExample extends JFrame {
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
+						
 					}
 					if (q.size() == 1) {
 						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
 						Queue save = q;
-//						mainText.setText(newGraph.minimumDistance(q.poll(),q.poll())))); TODO: A*
+//						mainText.setText(newGraph.minimumDistance(q.poll(),q.poll()))));
 					}
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
