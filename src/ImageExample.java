@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -71,26 +70,26 @@ public class ImageExample extends JFrame {
 		SearchWindow = new JTextField("Find a Location...");
 
 		String bl = null;
-		newGraph = new Graph(this);
+//		newGraph = new Graph(this);
 		int[] f ={1,2,3,5,6,7};
 		
 //		newGraph.addNode("DawnStar", new Coordinate(665, 128),f);
 		
-		newGraph.addNode("Falkreath", new Coordinate(550, 650));
-		newGraph.addNode("Markarth", new Coordinate(107, 434));
-		newGraph.addNode("Morthal", new Coordinate(482, 263));
-		newGraph.addNode("Riften", new Coordinate(1052, 692));
-		newGraph.addNode("Solitude", new Coordinate(434, 137));
-		newGraph.addNode("WhiteRun", new Coordinate(623, 459));
-		newGraph.addNode("Windhelm", new Coordinate(946, 359));
-		newGraph.addNode("WinterHold", new Coordinate(868, 135));
-		newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
-		newGraph.addNode("Helgen", new Coordinate(634, 664));
-		newGraph.addNode("Ivarstead", new Coordinate(785, 610));
-		newGraph.addNode("Karthwasten", new Coordinate(230, 346));
-		newGraph.addNode("Riverwood", new Coordinate(642, 560));
-		newGraph.addNode("Rorikstead", new Coordinate(338, 398));
-		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
+//		newGraph.addNode("Falkreath", new Coordinate(550, 650));
+//		newGraph.addNode("Markarth", new Coordinate(107, 434));
+//		newGraph.addNode("Morthal", new Coordinate(482, 263));
+//		newGraph.addNode("Riften", new Coordinate(1052, 692));
+//		newGraph.addNode("Solitude", new Coordinate(434, 137));
+//		newGraph.addNode("WhiteRun", new Coordinate(623, 459));
+//		newGraph.addNode("Windhelm", new Coordinate(946, 359));
+//		newGraph.addNode("WinterHold", new Coordinate(868, 135));
+//		newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
+//		newGraph.addNode("Helgen", new Coordinate(634, 664));
+//		newGraph.addNode("Ivarstead", new Coordinate(785, 610));
+//		newGraph.addNode("Karthwasten", new Coordinate(230, 346));
+//		newGraph.addNode("Riverwood", new Coordinate(642, 560));
+//		newGraph.addNode("Rorikstead", new Coordinate(338, 398));
+//		newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menuPanel = new JPanel();
 //		JComboBox Combobox = new JComboBox();
@@ -128,27 +127,9 @@ public class ImageExample extends JFrame {
 						menuPanel.remove(temppanel);
 					ImageExample.this.newGraph.nodes.clear();
 					mainText.setText("Find all cities under a certain\ndistance from you");
-					JTextField DistSearchWindow = new JTextField("Enter Length:");
-					temppanel = new JPanel();
-					menuPanel.add(temppanel);
-					menuPanel.remove(mainText);
-					temppanel.add(DistSearchWindow);
-					JButton newb = new JButton("Find");
-					temppanel.add(newb);
-					menuPanel.add(mainText);
-					newb.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							if (Integer.parseInt(DistSearchWindow.getText()) > 0
-									|| Integer.parseInt(DistSearchWindow.getText()) < 2000) {
-								mainText.setText("Enter New Length:");
-								// menuPanel.remove(temppanel);
-
-							}
-
-						}
-					});
+					
+					
+					
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
 					if (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel)) menuPanel.remove(checkPanel);;
@@ -157,6 +138,32 @@ public class ImageExample extends JFrame {
 						menuPanel.remove(temppanel);
 					newGraph.nodes.clear();
 					mainText.setText("Get options for routes\nbetween two nodes.");
+					JTextField DistSearchWindow = new JTextField("Enter Length:");
+					temppanel = new JPanel();
+					menuPanel.add(temppanel);
+					menuPanel.remove(mainText);
+					temppanel.add(DistSearchWindow);
+					JButton findButton = new JButton("Find");
+					temppanel.add(findButton);
+					menuPanel.add(mainText);
+					findButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							try {
+								if (Integer.parseInt(DistSearchWindow.getText()) > 0
+									|| Integer.parseInt(DistSearchWindow.getText()) < 2000) {
+								mainText.setText("Enter New Length.");
+								// menuPanel.remove(temppanel);
+
+							}
+							} catch (Exception a) {
+								mainText.setText("Invalid length.");
+							}
+							
+
+						}
+					});
 
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
@@ -265,6 +272,10 @@ public class ImageExample extends JFrame {
 				}
 
 			}
+
+			private Object getRoadTripTextBox() {
+				return null;
+			}
 		});
 		menuPanel.add(ZoomScroll);
 		SearchPanel.add(SearchButton);
@@ -338,9 +349,9 @@ public class ImageExample extends JFrame {
 	}
 
 	protected void removeCheckBoxes() {
-		
+
 		// TODO Auto-generated method stub.
-		
+
 	}
 
 	protected void checkCheckBoxes() {
@@ -376,33 +387,59 @@ public class ImageExample extends JFrame {
 			isChecked.add(0);
 		}
 
-	}
+		ArrayList cityList = new ArrayList();
+		cityList.add("Dawnstar");
+		cityList.add("Falkreath");
+		cityList.add("Markarth");
+		cityList.add("Morthal");
+		cityList.add("Riften");
+		cityList.add("Solitude");
+		cityList.add("Whiterun");
+		cityList.add("Windhelm");
+		cityList.add("Winterhold");
+		cityList.add("Dragon Bridge");
+		cityList.add("Helgen");
+		cityList.add("Ivarstead");
+		cityList.add("Karthwasten");
+		cityList.add("Riverwood");
+		cityList.add("Rorikstead");
+		cityList.add("Shor's Stone");
+		ArrayList validCities = new ArrayList();
+//		for (int i = 0; i < cityList.size(); i++) {
+//			for (int j = 0; j <= isChecked.size(); j++) {
+//				if (cityList.get(i).get(j) == isChecked.get(j)) {
+//					validCities.add(cityList[i]);
+//				}
+//			}
+//		}
+//		JTextArea validDestinations = new JTextArea();
+//		for (int i = 0; i < validCities.size(); i++) {
+//			validDestinations.append(validCities.get(i));
+//		}
+//		validDestinations.add(validDestinations);
 
-	protected Object getRoadTripTextBox() {
-		// TODO Auto-generated method stub.
-		return null;
 	}
 
 	public void minimumDistance() {
 
 	}
 
-	
 	JCheckBox generalStore = new JCheckBox("General Store");
 	JCheckBox apothecary = new JCheckBox("Apothecary");
 	JCheckBox blacksmith = new JCheckBox("Blacksmith");
 	JCheckBox inn = new JCheckBox("Inn");
 	JCheckBox magicStore = new JCheckBox("Magic Store");
 	JCheckBox jewelryStore = new JCheckBox("Jewelry Store");
+
 	public void addCheckBoxes(JPanel menuPanel) {
-		checkboxeson=true;
+		checkboxeson = true;
 		checkPanel = new JPanel();
 		checkPanel.setLayout(new GridLayout(6, 2));
 
 		JCheckBox generalStore = new JCheckBox("general store");
 		JCheckBox apothecary = new JCheckBox("apothecary");
 		JCheckBox blacksmith = new JCheckBox("blacksmith");
-		JCheckBox inn = new JCheckBox("inn");
+		JCheckBox inn = new JCheckBox ("inn");
 		JCheckBox magicStore = new JCheckBox("magicStore");
 		JCheckBox jewelryStore = new JCheckBox("jewelryStore");
 

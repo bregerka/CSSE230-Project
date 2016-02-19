@@ -33,13 +33,16 @@ public class Graph<T> {
 
 	public boolean addNode(T e, Coordinate c, int[] i) {
 		this.nodes.put(e, new Node(e, c, i));
-
-	public boolean addNode(T e, Coordinate c) {
-		this.nodes.put(e, new Node(e, c));
-
 		this.numNodes++;
 		return true;
 	}
+
+//	public boolean addNode(T e, Coordinate c) {
+//		this.nodes.put(e, new Node(e, c));
+//
+//		this.numNodes++;
+//		return true;
+//	}
 
 	public Node getNode(T e) {
 		return this.nodes.get(e);
@@ -84,11 +87,12 @@ public class Graph<T> {
 		private int yBorder;
 
 
-		int[] Matches;
+		int[] matches;
 		protected JButton newa;
 
-		public Node(T e, Coordinate location) {
+		public Node(T e, Coordinate location, int[] i) {
 			loadImage();
+			matches = i;
 			this.newa = new JButton();
 			nodePanel = new JPanel();
 			this.newa.addActionListener(new ActionListener() {
