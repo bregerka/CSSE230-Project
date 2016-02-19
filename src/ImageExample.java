@@ -245,6 +245,8 @@ public class ImageExample extends JFrame {
 						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
+						Queue save = q;
+//						mainText.setText(newGraph.minimumDistance(q.poll(),q.poll())))); TODO: A*
 					}
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
@@ -420,9 +422,6 @@ public class ImageExample extends JFrame {
 
 	}
 
-	public void minimumDistance() {
-
-	}
 
 	JCheckBox generalStore = new JCheckBox("General Store");
 	JCheckBox apothecary = new JCheckBox("Apothecary");

@@ -108,7 +108,6 @@ public class Graph<T> {
 
 			setSize(1, 1);
 
-//			this.Matches = matches;
 			this.newa = new JButton();
 			newa.setBounds(0, 0, 30, 30);
 
