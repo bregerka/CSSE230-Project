@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -30,19 +29,18 @@ public class Graph<T> {
 		return this.nodes.toString();
 	}
 
-
 	public boolean addNode(T e, Coordinate c, int[] i) {
 		this.nodes.put(e, new Node(e, c, i));
 		this.numNodes++;
 		return true;
 	}
 
-//	public boolean addNode(T e, Coordinate c) {
-//		this.nodes.put(e, new Node(e, c));
-//
-//		this.numNodes++;
-//		return true;
-//	}
+	// public boolean addNode(T e, Coordinate c) {
+	// this.nodes.put(e, new Node(e, c));
+	//
+	// this.numNodes++;
+	// return true;
+	// }
 
 	public Node getNode(T e) {
 		return this.nodes.get(e);
@@ -87,7 +85,6 @@ public class Graph<T> {
 		private int xBorder;
 		private int yBorder;
 
-
 		int[] matches;
 		protected JButton newa;
 
@@ -97,13 +94,12 @@ public class Graph<T> {
 			this.newa = new JButton();
 			nodePanel = new JPanel();
 			this.newa.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Graph.this.imageEx.remove(Node.this.newa);
 					Graph.this.imageEx.repaint();
-					
-					
+
 				}
 			});
 
@@ -111,7 +107,6 @@ public class Graph<T> {
 
 			this.newa = new JButton();
 			newa.setBounds(0, 0, 30, 30);
-
 
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
@@ -130,13 +125,16 @@ public class Graph<T> {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (java.util.Arrays.asList(nodePanel.getComponents()).contains(newa)){
+					if (java.util.Arrays.asList(nodePanel.getComponents())
+							.contains(newa)) {
 						nodePanel.remove(newa);
-					}
-					else nodePanel.add(newa);
-					
-					if (Graph.this.imageEx.q.contains(Node.this.element.toString()))
-						Graph.this.imageEx.q.remove(Node.this.element.toString());
+					} else
+						nodePanel.add(newa);
+
+					if (Graph.this.imageEx.q.contains(Node.this.element
+							.toString()))
+						Graph.this.imageEx.q.remove(Node.this.element
+								.toString());
 					else
 						Graph.this.imageEx.q.offer(Node.this.element.toString());
 					Graph.this.imageEx.repaint();
@@ -152,53 +150,56 @@ public class Graph<T> {
 			this.image = imagIcon.getImage();
 
 		}
-		
-		public ArrayList<Node> findPaths(T e, ArrayList<T> s){
+
+		public ArrayList<Node> findPaths(T e, ArrayList<T> s) {
 			ArrayList<Node> openList = new ArrayList<Node>(); // path
 			ArrayList<Node> closedList = new ArrayList<Node>(); // checked nodes
 			Node currentNode = this;
 			Node parentNode;
 			int totalCost = 0;
 			int minDist = 99999999;
-			//s.add(this.element);
+			// s.add(this.element);
 			openList.add(currentNode);
-			while(true){
-			for (Node n : openList){
-				int temp = currentNode.c.distanceTo(n.c);
-				if(temp < minDist){
-					minDist = temp;
-					currentNode = n;
+			while (true) {
+				for (Node n : openList) {
+					int temp = currentNode.c.distanceTo(n.c);
+					if (temp < minDist) {
+						minDist = temp;
+						currentNode = n;
+					}
+				}
+				openList.remove(currentNode);
+				closedList.add(currentNode);
+
+				if (currentNode == e)
+					return closedList;
+
+				int n2nMinDist = 99999999;
+
+				for (Node n : currentNode.nodeNeighbors) {
+					int temp = currentNode.c.distanceTo(n.c);
+					if (closedList.contains(n))
+						;
+					else if (!openList.contains(n) || (temp < n2nMinDist)) {
+						n2nMinDist = temp;
+						parentNode = currentNode;
+						if (!openList.contains(n))
+							openList.add(n);
+					}
 				}
 			}
-			openList.remove(currentNode);
-			closedList.add(currentNode);
-			
-			if(currentNode == e) return closedList;
-			
-			int n2nMinDist = 99999999;
-			
-			for (Node n : currentNode.nodeNeighbors){
-				int temp = currentNode.c.distanceTo(n.c);
-				if(closedList.contains(n));
-				else if(!openList.contains(n) || (temp < n2nMinDist)){
-					n2nMinDist = temp;
-					parentNode = currentNode;
-					if(!openList.contains(n)) openList.add(n);
-				}	
-			}
-			}
-	}
-		
+		}
+
 		public void addEdge(T e) {
 			Node otherNode = Graph.this.nodes.get(e);
 			double cost = this.c.distanceTo(otherNode.c);
 			this.neighbors.add(new Edge(otherNode, cost));
 		}
 
-		public void addNodeNeighbors(Node e){
+		public void addNodeNeighbors(Node e) {
 			this.nodeNeighbors.add(e);
 		}
-		
+
 		public double addRating(double x) {
 			this.rating = this.rating * this.numRatings;
 			this.numRatings++;
@@ -208,10 +209,13 @@ public class Graph<T> {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			this.xBorder = ((Graph.this.imageEx.map.x * 2 + this.c.getX() * Graph.this.imageEx.Zoom / 1000));
-			this.yBorder = ((Graph.this.imageEx.map.y * 2 + this.c.getY() * Graph.this.imageEx.Zoom / 1000));
+			this.xBorder = ((Graph.this.imageEx.map.x * 2 + this.c.getX()
+					* Graph.this.imageEx.Zoom / 1000));
+			this.yBorder = ((Graph.this.imageEx.map.y * 2 + this.c.getY()
+					* Graph.this.imageEx.Zoom / 1000));
 
-			if (this.xBorder < 1200 && this.yBorder < 850 && this.xBorder > 200 && this.yBorder > 0) {
+			if (this.xBorder < 1200 && this.yBorder < 850 && this.xBorder > 200
+					&& this.yBorder > 0) {
 				setBounds(this.xBorder, this.yBorder, 80, 80);
 				if (Graph.this.imageEx.q.contains(this.element.toString())) {
 					this.nodeButton.setOpaque(true);
@@ -223,10 +227,8 @@ public class Graph<T> {
 
 			}
 
-
 		}
-	}	
-		
+	}
 
 	private class Edge {
 		private Node otherNode;
@@ -250,9 +252,10 @@ public class Graph<T> {
 		}
 	}
 
-	public String roadTripCalculator(String string, String string2, Object minimumTextBox) {
+	public String roadTripCalculator(String string, String string2,
+			Object minimumTextBox) {
 		// TODO Auto-generated method stub.
 		return null;
 	}
 
-	}
+}

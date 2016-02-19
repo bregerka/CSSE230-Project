@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -300,7 +301,7 @@ public class ImageExample extends JFrame {
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
-						
+						//how to check if a node is pressed?
 					}
 					if (q.size() == 1) {
 						mainText.setText("Please select 1 more node.");
@@ -337,6 +338,7 @@ public class ImageExample extends JFrame {
 			}
 
 			private Object getRoadTripTextBox() {
+				Component lengthWindow = menuPanel.getComponent(0);
 				return null;
 			}
 		});
