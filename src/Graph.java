@@ -76,6 +76,7 @@ public class Graph<T> {
 
 		T element;
 		private ArrayList<Edge> neighbors;
+		private ArrayList<Node> nodeNeighbors;
 		private double rating;
 		private int numRatings;
 		private Coordinate c;
@@ -114,6 +115,7 @@ public class Graph<T> {
 
 			this.element = e;
 			this.neighbors = new ArrayList<Edge>();
+			this.nodeNeighbors = new ArrayList<Node>();
 			this.c = location;
 			this.numRatings = 0;
 			this.rating = 0;
@@ -150,13 +152,53 @@ public class Graph<T> {
 			this.image = imagIcon.getImage();
 
 		}
-
+		
+		public ArrayList<Node> findPaths(T e, ArrayList<T> s){
+			ArrayList<Node> openList = new ArrayList<Node>(); // path
+			ArrayList<Node> closedList = new ArrayList<Node>(); // checked nodes
+			Node currentNode = this;
+			Node parentNode;
+			int totalCost = 0;
+			int minDist = 99999999;
+			//s.add(this.element);
+			openList.add(currentNode);
+			while(true){
+			for (Node n : openList){
+				int temp = currentNode.c.distanceTo(n.c);
+				if(temp < minDist){
+					minDist = temp;
+					currentNode = n;
+				}
+			}
+			openList.remove(currentNode);
+			closedList.add(currentNode);
+			
+			if(currentNode == e) return closedList;
+			
+			int n2nMinDist = 99999999;
+			
+			for (Node n : currentNode.nodeNeighbors){
+				int temp = currentNode.c.distanceTo(n.c);
+				if(closedList.contains(n));
+				else if(!openList.contains(n) || (temp < n2nMinDist)){
+					n2nMinDist = temp;
+					parentNode = currentNode;
+					if(!openList.contains(n)) openList.add(n);
+				}	
+			}
+			}
+	}
+		
 		public void addEdge(T e) {
 			Node otherNode = Graph.this.nodes.get(e);
 			double cost = this.c.distanceTo(otherNode.c);
 			this.neighbors.add(new Edge(otherNode, cost));
 		}
 
+		public void addNodeNeighbors(Node e){
+			this.nodeNeighbors.add(e);
+		}
+		
 		public double addRating(double x) {
 			this.rating = this.rating * this.numRatings;
 			this.numRatings++;
@@ -183,8 +225,8 @@ public class Graph<T> {
 
 
 		}
-
-	}
+	}	
+		
 
 	private class Edge {
 		private Node otherNode;
@@ -213,4 +255,4 @@ public class Graph<T> {
 		return null;
 	}
 
-}
+	}
