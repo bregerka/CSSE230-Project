@@ -1,101 +1,163 @@
 import java.util.ArrayList;
+/**
+* 
+ * @author bregerka
+*
+* @param <T>
+*/
+public class RoutePriorityQueue<Object> extends ArrayList<Object>{
+       private static final long serialVersionUID = 1L;
+       int size;
+       
+       public RoutePriorityQueue(){
+             this.size = 0 ;
+       }
+       
+       public boolean add(Object value) {
+             if(value == null) throw new NullPointerException();
+             boolean b;
+             b = super.add(value);
+             if(super.size()>1){
+                    percolateUp(super.size()-1);
+             }
+             return b;    
+       }
+       
+       /**
+       * Resorts the queue after an element is removed
+       * @param spot
+       */
+       public void percolateDown(int spot) {
+             if (spot != super.size() - 1) {
+                    
+                           int lspot = ((spot + 1) * 2) - 1;
+                           int rspot = (spot + 1) * 2;
+                           if (rspot <= super.size() - 1) {
+                           Route lelement = (Route) super.get(lspot);
+                           Route relement = (Route) super.get(rspot);
+                           Route element = (Route) super.get(spot);
 
-public class RoutePriorityQueue<T extends Comparable<? super T>> extends
-		ArrayList<T> {
+                           if (element.compareTo(lelement) == 1
+                                        || element.compareTo(relement) == 1) {
+                                 int check = relement.compareTo(lelement);
+                                 if (relement.getCost() < lelement.getCost()) {
+                                        super.set(spot, (Object) relement);
+                                        super.set(rspot, (Object) element);
+                                        percolateDown(rspot);
+                                 } else if (relement.getCost() > lelement.getCost()) {
+                                        super.set(spot, (Object) lelement);
+                                        super.set(lspot, (Object) element);
+                                        percolateDown(lspot);
+                                 } else {
+                                        return;
+                                 }
 
-	public RoutePriorityQueue() {
-	}
+                           }
+                    }
+             }
 
-	@Override
-	public boolean add(T element) {
-		super.add(element);
-		if (size() == 1)
-			return true;
-		int childIndex = size() - 1;
-		int parentIndex = getParentIndex(childIndex);
-		while (childIndex > 0) {
-			if (get(childIndex).compareTo(get(parentIndex)) < 0) {
-				swap(childIndex, parentIndex);
-			}
-			childIndex = childIndex / 2;
-		}
-		return true;
-	}
+       }
+       
+       
+       
+       /**
+       * Resorts the list after an element is added
+       * @param index
+       */
+       public void percolateUp(int index) {
 
-	public int getParentIndex(int childIndex) {
-		int parentIndex = (childIndex - 1) / 2;
-		return parentIndex;
-	}
-
-	public boolean offer(T element2) {
-		return add(element2);
-	}
-
-	public T peek() {
-		if (size() == 0)
-			return null;
-		return get(0);
-	}
-
-	public T poll() {
-		if (size() == 0)
-			return null;
-		T temp = peek();
-		remove(temp);
-		return temp;
-	}
-
-	public boolean remove(T element) {
-		if (element == null)
-			throw new NullPointerException();
-		if (size() == 0)
-			return false;
-		for (int i = 0; i < size(); i++) {
-			if (get(i).compareTo(element) == 0) {
-				return removeHelper(i);
-			}
-		}
-		return false;
-	}
-
-	public boolean removeHelper(int index) {
-		int smallIndex = findSmallerChildIndex(index);
-		if (smallIndex == -1) {
-			return noChildRemove(index);
-		}
-		swap(index, smallIndex);
-		return removeHelper(smallIndex);
-	}
-
-	private boolean noChildRemove(int index) {
-		if (index == size() - 1) {
-			super.remove(index);
-			return true;
-		}
-		set(index, get(size() - 1));
-		super.remove(size() - 1);
-		return true;
-	}
-
-	private void swap(int index, int smallIndex) {
-		T temp = get(smallIndex);
-		set(smallIndex, get(index));
-		set(index, temp);
-	}
-
-	public int findSmallerChildIndex(int parentIndex) {
-		int secondChildIndex = (parentIndex + 1) * 2;
-		int firstChildIndex = ((parentIndex + 1) * 2) - 1;
-		if (firstChildIndex >= size()) {
-			return -1;
-		}
-		if (secondChildIndex >= size()) {
-			return firstChildIndex;
-		}
-		int compareChildren = get(firstChildIndex).compareTo(
-				get(secondChildIndex));
-		if (compareChildren < 0)
-			return firstChildIndex;
-		return secondChildIndex;
-	}
+             int parentIndex = ((index / 2) + (index % 2) - 1);
+             Route parent = (Route) super.get(parentIndex);
+             if (parent.getCost() > ((Route) super.get(index)).getCost()) {
+                    super.set(parentIndex, super.get(index));
+                    super.set(index, (Object) parent);
+                    if (parentIndex > 0)
+                           percolateUp(parentIndex);
+             }
+       }
+       /**
+       * Changes queue to an Array
+       */
+       public Object[] toArray() {
+             return (Object[]) super.toArray();
+       }
+       /**
+       * Adds a value to the queue
+       * @param value
+       * @return boolean
+       */
+       public boolean offer(Object value) {
+             return this.add(value);
+       }
+       /**
+       * Looks at the first element
+       * @return the first element
+       */
+       public Object peek() {
+             if(super.size() == 0) return null;
+             return super.get(0);
+       }
+       /**
+       * Clear the entire queue
+       */
+       public void clear() {
+             super.clear();
+       }
+       /**
+       * Returns if the value is contained in the queue
+       * @param value
+       * @return true if it is in the queue, false if not
+       */
+       public boolean contains1(Object value) {
+             int contains = super.indexOf(value);
+             if(contains == -1) return false;
+             return true;
+       }
+       /**
+       * returns the size of the queue
+       */
+       public int size() {
+             return super.size();
+       }
+       /**
+       * Puts the queue in an Array
+       * @param numbers
+       * @return
+       */
+       public Object[] toArray1(Object[] numbers) {
+             return super.toArray(numbers);
+       }
+       /**
+       * Removes the head of the queue
+       * @return head of the queue
+       */
+       public Object poll() {
+             if(super.size() == 0) return null;
+             if(super.size()>2)
+             {
+                    Object temp1= super.get(1);
+                    super.set(1,super.get(2));
+                    super.set(2,temp1);
+             }
+             Object temp2 = super.get(0);
+             this.remove(temp2);
+             return temp2;
+       }
+       /**
+       * Removes the first element and then reorders
+       * @param value
+       * @return
+       */
+       public boolean remove1(Object value) {
+             if(value == null) throw new NullPointerException();
+             int savedSpot = super.indexOf(value);
+             if(savedSpot == -1) return false;
+             super.set(savedSpot, super.get(super.size() - 1));
+             super.remove(super.size() - 1);
+             if(super.size()>1){
+                    percolateDown(savedSpot);
+             }
+             return true; 
+       }
+       
 }
