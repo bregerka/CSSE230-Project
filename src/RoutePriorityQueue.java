@@ -109,8 +109,7 @@ public class RoutePriorityQueue<Object> extends ArrayList<Object> {
        }
 
        /**
-       * removes the specified element
-       * 
+       * removes specified element
         * @param element
        * @return if successful
        */
@@ -129,8 +128,7 @@ public class RoutePriorityQueue<Object> extends ArrayList<Object> {
        }
 
        /**
-       * adds the element to the queue
-       * 
+       * adds the element to the queue 
         * @param element
        * @return
        */

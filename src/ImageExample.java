@@ -29,7 +29,6 @@ public class ImageExample extends JFrame {
 	int xVariable;
 	int yVariable;
 	static Graph newGraph;
-	private boolean checkboxeson;
 	private JPanel checkPanel;
 	JPanel menuPanel;
 	public static int Zoom = 1000;
@@ -38,6 +37,7 @@ public class ImageExample extends JFrame {
 	static JPanel temppanel;
 	ArrayList<Route> routes;
 	RoutePriorityQueue<Route> shortest = new RoutePriorityQueue<Route>();
+	static int maxLen = -1;
 
 	public ImageExample() {
 
@@ -192,53 +192,24 @@ public class ImageExample extends JFrame {
 				.getNode("Windhelm"));
 		newGraph.getNode("Shor's Stone").Neighbors.add(newGraph
 				.getNode("Riften"));
-		// System.out.println(newGraph.getNodes().);
 
-		System.out.println("gg");
+		newGraph.getNode("Dawnstar").setDanger(5);
+		newGraph.getNode("Falkreath").setDanger(4);
+		newGraph.getNode("Markarth").setDanger(5);
+		newGraph.getNode("Morthal").setDanger(4);
+		newGraph.getNode("Riften").setDanger(5);
+		newGraph.getNode("Solitude").setDanger(1);
+		newGraph.getNode("Whiterun").setDanger(2);
+		newGraph.getNode("Windhelm").setDanger(2);
+		newGraph.getNode("Winterhold").setDanger(4);
+		newGraph.getNode("Dragon Bridge").setDanger(3);
+		newGraph.getNode("Helgen").setDanger(3);
+		newGraph.getNode("Ivarstead").setDanger(3);
+		newGraph.getNode("Karthwasten").setDanger(4);
+		newGraph.getNode("Riverwood").setDanger(1);
+		newGraph.getNode("Rorikstead").setDanger(3);
+		newGraph.getNode("Shor's Stone").setDanger(4);
 
-		// this.newGraph.addNode("Dawnstar", new Coordinate(665, 128), new int[]
-		// { 0, 1, 1, 1, 0, 0 });
-		// ArrayList<Graph.Node> gg = this.newGraph.getNodes();
-		//
-		// for (Graph.Node item : gg)
-		// if (item.element == "Dawnstar")
-		// item.setNeighbors(new String[] { "Falkreath", "Markarth" });
-		//
-		//
-		// // this.newGraph.getNodes.g("Dawnstar").setNeighbors(new String[] {
-		// // "Falkreath", "Markarth" });
-		// this.newGraph.addNode("Falkreath", new Coordinate(550, 650), new
-		// int[] { 1, 1, 1, 1, 0, 0 });
-		// this.newGraph.addNode("Markarth", new Coordinate(107, 434), new int[]
-		// { 1, 1, 1, 1, 1, 1 });
-		// this.newGraph.addNode("Morthal", new Coordinate(482, 263), new int[]
-		// { 0, 1, 0, 1, 1, 0 });
-		// this.newGraph.addNode("Riften", new Coordinate(1052, 692), new int[]
-		// { 1, 1, 1, 1, 1, 1 });
-		// this.newGraph.addNode("Solitude", new Coordinate(434, 137), new int[]
-		// { 1, 1, 1, 1, 1, 1 });
-		// this.newGraph.addNode("Whiterun", new Coordinate(623, 459), new int[]
-		// { 1, 1, 1, 1, 1, 1 });
-		// this.newGraph.addNode("Windhelm", new Coordinate(946, 359), new int[]
-		// { 1, 1, 1, 1, 1, 0 });
-		// this.newGraph.addNode("Winterhold", new Coordinate(868, 135), new
-		// int[] { 1, 0, 0, 1, 1, 0 });
-		// this.newGraph.addNode("Dragon Bridge", new Coordinate(308, 223), new
-		// int[] { 0, 0, 0, 1, 0, 0 });
-		// this.newGraph.addNode("Helgen", new Coordinate(634, 664), new int[] {
-		// 0, 0, 0, 0, 0, 0 });
-		// this.newGraph.addNode("Ivarstead", new Coordinate(785, 610), new
-		// int[] { 0, 0, 0, 1, 0, 0 });
-		// this.newGraph.addNode("Karthwasten", new Coordinate(230, 346), new
-		// int[] { 0, 0, 0, 0, 0, 0 });
-		// this.newGraph.addNode("Riverwood", new Coordinate(642, 560), new
-		// int[] { 1, 0, 1, 1, 0, 0 });
-		// this.newGraph.addNode("Rorikstead", new Coordinate(338, 398), new
-		// int[] { 0, 0, 0, 1, 0, 0 });
-		// this.newGraph.addNode("Shor's Stone", new Coordinate(1025, 623), new
-		// int[] { 0, 0, 1, 0, 0, 0 });
-		// this.newGraph.addNode(1, new Coordinate(1025, 623), new int[] { 0, 0,
-		// 1, 0, 0, 0 });
 		this.menuPanel = new JPanel();
 
 		newGraph.getNode("Dawnstar").nodeNeighbors = new ArrayList();
@@ -346,53 +317,10 @@ public class ImageExample extends JFrame {
 		newGraph.getNode("Shor's Stone").nodeNeighbors.add(newGraph
 				.getNode("Riften"));
 
-		menuPanel = new JPanel();
+		this.menuPanel = new JPanel();
 
 		JComboBox<String> Combobox = new JComboBox<String>();
 		SearchWindow = new JTextField("Find a Location...");
-
-		String bl = null;
-
-		// newGraph = new Graph(this);
-
-		// newGraph.addNode("DawnStar", new Coordinate(665, 128),f);
-
-		// newGraph.addNode("Falkreath", new Coordinate(550, 650));
-		// newGraph.addNode("Markarth", new Coordinate(107, 434));
-		// newGraph.addNode("Morthal", new Coordinate(482, 263));
-		// newGraph.addNode("Riften", new Coordinate(1052, 692));
-		// newGraph.addNode("Solitude", new Coordinate(434, 137));
-		// newGraph.addNode("WhiteRun", new Coordinate(623, 459));
-		// newGraph.addNode("Windhelm", new Coordinate(946, 359));
-		// newGraph.addNode("WinterHold", new Coordinate(868, 135));
-		// newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
-		// newGraph.addNode("Helgen", new Coordinate(634, 664));
-		// newGraph.addNode("Ivarstead", new Coordinate(785, 610));
-		// newGraph.addNode("Karthwasten", new Coordinate(230, 346));
-		// newGraph.addNode("Riverwood", new Coordinate(642, 560));
-		// newGraph.addNode("Rorikstead", new Coordinate(338, 398));
-		// newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
-
-		// newGraph = new Graph(this);
-		int[] f = { 1, 2, 3, 5, 6, 7 };
-
-		// newGraph.addNode("DawnStar", new Coordinate(665, 128),f);
-
-		// newGraph.addNode("Falkreath", new Coordinate(550, 650));
-		// newGraph.addNode("Markarth", new Coordinate(107, 434));
-		// newGraph.addNode("Morthal", new Coordinate(482, 263));
-		// newGraph.addNode("Riften", new Coordinate(1052, 692));
-		// newGraph.addNode("Solitude", new Coordinate(434, 137));
-		// newGraph.addNode("WhiteRun", new Coordinate(623, 459));
-		// newGraph.addNode("Windhelm", new Coordinate(946, 359));
-		// newGraph.addNode("WinterHold", new Coordinate(868, 135));
-		// newGraph.addNode("Dragon Bridge", new Coordinate(308, 223));
-		// newGraph.addNode("Helgen", new Coordinate(634, 664));
-		// newGraph.addNode("Ivarstead", new Coordinate(785, 610));
-		// newGraph.addNode("Karthwasten", new Coordinate(230, 346));
-		// newGraph.addNode("Riverwood", new Coordinate(642, 560));
-		// newGraph.addNode("Rorikstead", new Coordinate(338, 398));
-		// newGraph.addNode("Shor's Stone", new Coordinate(1025, 623));
 
 		JPanel menuPanel = new JPanel();
 		// JComboBox Combobox = new JComboBox();
@@ -408,8 +336,6 @@ public class ImageExample extends JFrame {
 		Combobox.addItem("Find Nearest");
 		Combobox.addItem("Plan Road Trip");
 
-		Combobox.addItem("Find close by towns");
-
 		// Combobox.addItem("Find close by towns");
 
 		Combobox.addActionListener(new ActionListener() {
@@ -421,8 +347,6 @@ public class ImageExample extends JFrame {
 					if (java.util.Arrays.asList(menuPanel.getComponents())
 							.contains(ImageExample.this.checkPanel))
 						menuPanel.remove(ImageExample.this.checkPanel);
-					;
-
 					if (java.util.Arrays.asList(menuPanel.getComponents())
 							.contains(temppanel))
 						menuPanel.remove(temppanel);
@@ -434,29 +358,10 @@ public class ImageExample extends JFrame {
 					if (java.util.Arrays.asList(menuPanel.getComponents())
 							.contains(ImageExample.this.checkPanel))
 						menuPanel.remove(ImageExample.this.checkPanel);
-					;
-
-					// if (Combobox.getSelectedItem() == "Find close by towns")
-					// {
-					// if
-					// (java.util.Arrays.asList(menuPanel.getComponents()).contains(checkPanel))
-					// menuPanel.remove(checkPanel);;
-					//
-					// if
-					// (java.util.Arrays.asList(menuPanel.getComponents()).contains(temppanel))
-					// menuPanel.remove(temppanel);
-					// ImageExample.this.newGraph.nodes.clear();
-					// mainText.setText("Find all cities under a certain\ndistance from you");
-					//
-					//
-					//
-					// }
 					if (Combobox.getSelectedItem() == "Plan Road Trip") {
 						if (java.util.Arrays.asList(menuPanel.getComponents())
-								.contains(checkPanel))
-							menuPanel.remove(checkPanel);
-						;
-
+								.contains(ImageExample.this.checkPanel))
+							menuPanel.remove(ImageExample.this.checkPanel);
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(temppanel))
 							menuPanel.remove(temppanel);
@@ -483,8 +388,6 @@ public class ImageExample extends JFrame {
 													.parseInt(DistSearchWindow
 															.getText()) < 20000) {
 										mainText.setText("Enter New Length:");
-										// menuPanel.remove(temppanel);
-
 									}
 								} catch (Exception a) {
 									mainText.setText("Invalid length.");
@@ -564,14 +467,15 @@ public class ImageExample extends JFrame {
 				// Enumeration<String> afd =
 				// ImageExample.this.newGraph.nodes.keys();
 
-				for (Object item : tempGraph.getNodes()) {
+				for (Object item : this.tempGraph.getNodes()) {
 					String asd = ((Graph.Node) item).getElement();
 					if (SearchWindow.getText().equals(asd)) {
 						if (q.contains(asd)) {
 							q.remove(asd);
 
 						} else {
-							ArrayList<Graph.Node> gg = tempGraph.getNodes();
+							ArrayList<Graph.Node> gg = this.tempGraph
+									.getNodes();
 							for (Graph.Node item2 : gg)
 								if (item2.element == asd)
 									q.offer(item2);
@@ -591,6 +495,9 @@ public class ImageExample extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (java.util.Arrays.asList(menuPanel.getComponents())
+						.contains(temppanel))
+					menuPanel.remove(temppanel);
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
@@ -602,33 +509,70 @@ public class ImageExample extends JFrame {
 					if (q.size() == 2) {
 						Queue save = q;
 						Graph.Node g = q.poll();
-						ArrayList<Graph.Node> shortestPath = shortestPath(g, q.poll());
-						// ArrayList<Graph.Node> a = new ArrayList<>();
-						// ArrayList<Graph.Node> temp = new ArrayList();
-						// a.add(g);
-						// ArrayList<Graph.Node> gg = g.Neighbors;
-						// int newS;
-						// int oldS = 999999;
-						// for (Graph.Node item : gg) {
-						// ArrayList<Graph.Node> t = ;
-						 for (Graph.Node item3 : shortestPath){
-						 System.out.println(item3.getElement());
-						
-						 }
-						// System.out.println(oldS);
+						ArrayList<Graph.Node> shortestPath = shortestPath(g,
+								q.poll());
 
-						// mainText.setText(newGraph.minimumDistance(q.poll(),q.poll()))));
+						for (Graph.Node item3 : shortestPath) {
+							mainText.append("\n" + item3.getElement());
+
+						}
 
 					}
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
+					JTextField maxDistWindow = new JTextField(
+							"Enter Max Travel Distance:");
+					temppanel = new JPanel();
+					temppanel.add(maxDistWindow);
+					menuPanel.add(temppanel);
+					menuPanel.remove(mainText);
+					
+					JButton findButton = new JButton("Find");
+					temppanel.add(findButton);
+					menuPanel.add(mainText);
+					repaint();
+					findButton.addActionListener(new ActionListener() {
+						@Override
+						
+						public void actionPerformed(ActionEvent e) {
+							if (java.util.Arrays.asList(menuPanel.getComponents())
+									.contains(temppanel))
+								menuPanel.remove(temppanel);
+							try {
+								if (Integer.parseInt(maxDistWindow.getText()) > 0
+
+										|| Integer.parseInt(maxDistWindow
+												.getText()) < 20000) {
+									// mainText.setText("Enter New Length:");
+									maxLen = Integer.parseInt(maxDistWindow
+											.getText());
+								}
+							} catch (Exception a) {
+								mainText.setText("Invalid length.");
+							}
+							
+						}
+					});
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
 					}
 					if (q.size() == 1) {
-						System.out.println("Road Trip");
+						mainText.setText("Please select 1 more node.");
 					}
-
+					if (q.size() == 2) {
+						Queue save = q;
+						Graph.Node g = q.poll();
+						RoutePriorityQueue<Route> temp = roadTripPath(g,
+								q.poll());
+						for (Route r : temp) {
+							if (r.getCost() <= maxLen) {
+								ArrayList<Graph.Node> tempNode = r.getPath();
+								for (Graph.Node n : tempNode) {
+									mainText.append("\n" + n.element);
+								}
+							}
+						}
+					}
 					mainText.setText(ImageExample.this.newGraph
 							.roadTripCalculator(q.poll().getElement(), q.poll()
 									.getElement(), getRoadTripTextBox()));
@@ -688,7 +632,6 @@ public class ImageExample extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				redrawnodes();
-
 			}
 
 			@Override
@@ -783,33 +726,6 @@ public class ImageExample extends JFrame {
 		cityList.add("Rorikstead");
 		cityList.add("Shor's Stone");
 		ArrayList validCities = new ArrayList();
-
-		// for (int i = 0; i < cityList.size(); i++) {
-		// for (int j = 0; j <= isChecked.size(); j++) {
-		// if (cityList.get(i).get(j) == isChecked.get(j)) {
-		// validCities.add(cityList[i]);
-		// }
-		// }
-		// }
-		// JTextArea validDestinations = new JTextArea();
-		// for (int i = 0; i < validCities.size(); i++) {
-		// validDestinations.append(validCities.get(i));
-		// }
-		// validDestinations.add(validDestinations);
-
-		// for (int i = 0; i < cityList.size(); i++) {
-		// for (int j = 0; j <= isChecked.size(); j++) {
-		// if (cityList.get(i).get(j) == isChecked.get(j)) {
-		// validCities.add(cityList[i]);
-		// }
-		// }
-		// }
-		// JTextArea validDestinations = new JTextArea();
-		// for (int i = 0; i < validCities.size(); i++) {
-		// validDestinations.append(validCities.get(i));
-		// }
-		// validDestinations.add(validDestinations);
-
 	}
 
 	JCheckBox generalStore = new JCheckBox("General Store");
@@ -821,13 +737,11 @@ public class ImageExample extends JFrame {
 
 	public void addCheckBoxes(JPanel menuPanel) {
 
-		this.checkboxeson = true;
 		this.checkPanel = new JPanel();
 		this.checkPanel.setLayout(new GridLayout(6, 2));
 
-		checkboxeson = true;
-		checkPanel = new JPanel();
-		checkPanel.setLayout(new GridLayout(6, 2));
+		this.checkPanel = new JPanel();
+		this.checkPanel.setLayout(new GridLayout(6, 2));
 
 		JCheckBox generalStore = new JCheckBox("general store");
 		JCheckBox apothecary = new JCheckBox("apothecary");
@@ -844,13 +758,13 @@ public class ImageExample extends JFrame {
 		this.checkPanel.add(jewelryStore);
 		menuPanel.add(this.checkPanel);
 
-		checkPanel.add(generalStore);
-		checkPanel.add(apothecary);
-		checkPanel.add(blacksmith);
-		checkPanel.add(inn);
-		checkPanel.add(magicStore);
-		checkPanel.add(jewelryStore);
-		menuPanel.add(checkPanel);
+		this.checkPanel.add(generalStore);
+		this.checkPanel.add(apothecary);
+		this.checkPanel.add(blacksmith);
+		this.checkPanel.add(inn);
+		this.checkPanel.add(magicStore);
+		this.checkPanel.add(jewelryStore);
+		menuPanel.add(this.checkPanel);
 
 	}
 
@@ -880,7 +794,7 @@ public class ImageExample extends JFrame {
 		ArrayList<Graph.Node> temp = new ArrayList<>();
 		temp.add(start);
 		getPath(temp, start, end, 0);
-		return shortest.poll().getPath();
+		return this.shortest.poll().getPath();
 	}
 
 	public void getPath(ArrayList<Graph.Node> pathNodes, Graph.Node current,
@@ -888,15 +802,25 @@ public class ImageExample extends JFrame {
 		for (Graph.Node i : current.nodeNeighbors) {
 			if (current.element.equals(end.element)) {
 				Route potentialRoute = new Route(pathNodes, distance);
-				shortest.add(potentialRoute);
+				this.shortest.add(potentialRoute);
 			}
 			if (!pathNodes.contains(i)) {
 				ArrayList<Graph.Node> temp = new ArrayList<Graph.Node>();
 				temp.addAll(pathNodes);
 				temp.add(i);
-				getPath(temp, i, end, distance + current.c.distanceTo(i.c));
+				CostFxn cstFxn = new CostFxn(current.c.distanceTo(i.c),
+						current.danger);
+				getPath(temp, i, end, distance + cstFxn.getDist());
 			}
 		}
+	}
+
+	public RoutePriorityQueue<Route> roadTripPath(Graph.Node start,
+			Graph.Node end) {
+		ArrayList<Graph.Node> temp = new ArrayList<>();
+		temp.add(start);
+		getPath(temp, start, end, 0);
+		return this.shortest;
 	}
 
 }

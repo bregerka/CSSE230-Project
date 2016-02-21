@@ -34,31 +34,10 @@ public class Graph {
 	}
 
 	public boolean addNode(String e, Coordinate c, int[] i) {
- 
 		this.nodes.add(new Node(e, c, i));
- 
 		this.numNodes++;
 		return true;
 	}
-
- 
-	public boolean addNode(Node node) {
-		this.nodes.add(node);
-		this.numNodes++;
-		return true;
-	}
- 
-	// public boolean addNode(T e, Coordinate c) {
-	// this.nodes.put(e, new Node(e, c));
-	//
-	// this.numNodes++;
-	// return true;
-	// }
-
-//	public Node getNode(String e) {
-//		return this.nodes.get(e);
-// 
-//	}
 
 	public boolean containsNode(Node e) {
 		return this.nodes.contains(e);
@@ -67,7 +46,6 @@ public class Graph {
 	public boolean addEdge(Node e1, Node e2) {
 		if (!this.nodes.contains(e1) && !this.nodes.contains(e2))
 			return false;
-		// e1.addEdge(e2.element);
 		this.numEdges++;
 		return true;
 	}
@@ -79,41 +57,24 @@ public class Graph {
 	public void setMaxTime(double x) {
 		this.maxTime = x;
 	}
-
-	public String findMin(Node one, Node two) {
-		return "-1";
-	}
-
+	
 	class Node extends JPanel {
 
 		String element;
-		
- 
-		private ArrayList<Edge> neighbors;
 		public ArrayList<Node> nodeNeighbors;
- 
 		int rating;
 		private int numRatings;
 		Coordinate c;
 		private Image image;
-		private int Zoom;
 		private JButton nodeButton;
 		JPanel nodePanel;
 		private int xBorder;
 		private int yBorder;
- 
-
+		int danger = -1;
 		int[] Matches;
 		protected JButton newa;
 		ArrayList<Node> Neighbors;
-
-//		public Node(String e, Coordinate location, int[] i) {
-//			loadImage();
-//			this.Matches = i;
-// 
-//
-//		int[] matches;
-//		protected JButton newa;
+		private CostFxn cstFxn;
 
 		public Node(String e, Coordinate location, int[] i) {
 			loadImage();
@@ -132,19 +93,16 @@ public class Graph {
 			});
 
 			setSize(1, 1);
-
- 
-			// this.Matches = matches;
+			
 			this.newa = new JButton();
 			this.newa.setBounds(0, 0, 30, 30);
 
 			this.element = e;
- 
+			//this.cstFxn = new CostFxn(this.danger)
 			this.newa = new JButton();
-			newa.setBounds(0, 0, 30, 30);
+			this.newa.setBounds(0, 0, 30, 30);
 
 			this.element = e;
-			this.neighbors = new ArrayList<Edge>();
 			this.nodeNeighbors = new ArrayList<Node>();
  
 			this.c = location;
@@ -159,23 +117,12 @@ public class Graph {
 
 			this.nodeButton.addActionListener(new ActionListener() {
 
-				@Override
- 
-//				public void actionPerformed(ActionEvent e1) {
-//					if (java.util.Arrays.asList(Node.this.nodePanel.getComponents()).contains(Node.this.newa)) {
-//						Node.this.nodePanel.remove(Node.this.newa);
-//					} else
-//						Node.this.nodePanel.add(Node.this.newa);
-//
-//					if (Graph.this.imageEx.q.contains(Node.this))
-//						Graph.this.imageEx.q.remove(Node.this);
- 
 				public void actionPerformed(ActionEvent e) {
-					if (java.util.Arrays.asList(nodePanel.getComponents())
-							.contains(newa)) {
-						nodePanel.remove(newa);
+					if (java.util.Arrays.asList(Node.this.nodePanel.getComponents())
+							.contains(Node.this.newa)) {
+						Node.this.nodePanel.remove(Node.this.newa);
 					} else
-						nodePanel.add(newa);
+						Node.this.nodePanel.add(Node.this.newa);
 
 					if (Graph.this.imageEx.q.contains(Node.this.element
 							.toString()))
@@ -190,19 +137,20 @@ public class Graph {
 			});
 
 		}
+		
+		public void setDanger(int danger){
+			this.danger = danger;
+		}
 
 		String getElement() {
-			return (String) element;
-
+			return this.element;
 		}
 
 		void setNeighbors(String[] s) {
-			Neighbors = new ArrayList<>();
+			this.Neighbors = new ArrayList<>();
 			for (String item : s) {
-
 				System.out.println(Graph.this.getNode(item));
-				Neighbors.add(Graph.this.getNode(item));
-
+				this.Neighbors.add(Graph.this.getNode(item));
 			}
 		}
 
@@ -212,92 +160,6 @@ public class Graph {
 			this.image = imagIcon.getImage();
 
 		}
-
- 
-		public ArrayList<Node> findPaths(Node a, ArrayList<Node> s, ArrayList<Node> temp, int runDistance, int min) {
-			System.out.println("pop");
-			if (s.contains(this))
-				return null;
-			
-			if (this == a){
-				temp.add(this);
-				return temp;	
-			}
-			for (Node item : Neighbors){			
-				item.findPaths(a, s, temp, runDistance+=c.distanceTo(item.c),min);
-				if(min > runDistance){
-					min = runDistance;
-					s.addAll(temp);
-				}		
-//				if(min > runDistance){
-//					min = runDistance;
-//					s.addAll(temp);
-//				}	
-			}
-			return s;
-		}
-
-		public int findMinDistance(Node poll, ArrayList<Node> a, int i) {
-			System.out.println("pop2");
-			if (a.contains(this))
-				return 99999;
-			a.add(this);
-			if (this == poll)
-				return i;
-
-			// int i;
-			for (Node item : Neighbors)
-				if (i > c.distanceTo(item.c))
-
-					this.findMinDistance(item, a, i += c.distanceTo(item.c));
-			return i;
-		}
-
-		// public void addEdge(Node e) {
-		// Node otherNode = Graph.this.nodes.get(e);
-		// double cost = this.c.distanceTo(otherNode.c);
-		// // this.neighbors.add(new Edge(otherNode, cost));
-		// }
- 
-		public ArrayList<Node> findPaths(String e, ArrayList<String> s) {
-			ArrayList<Node> openList = new ArrayList<Node>(); // path
-			ArrayList<Node> closedList = new ArrayList<Node>(); // checked nodes
-			Node currentNode = this;
-			Node parentNode;
-			int totalCost = 0;
-			int minDist = 99999999;
-			// s.add(this.element);
-			openList.add(currentNode);
-			while (true) {
-				for (Node n : openList) {
-					int temp = currentNode.c.distanceTo(n.c);
-					if (temp < minDist) {
-						minDist = temp;
-						currentNode = n;
-					}
-				}
-				openList.remove(currentNode);
-				closedList.add(currentNode);
-
-				if (currentNode.element == e)
-					return closedList;
-
-				int n2nMinDist = 99999999;
-
-				for (Node n : currentNode.nodeNeighbors) {
-					int temp = currentNode.c.distanceTo(n.c);
-					if (closedList.contains(n))
-						;
-					else if (!openList.contains(n) || (temp < n2nMinDist)) {
-						n2nMinDist = temp;
-						parentNode = currentNode;
-						if (!openList.contains(n))
-							openList.add(n);
-					}
-				}
-			}
-		}
-
 
 		public void addNodeNeighbors(Node e) {
 			this.nodeNeighbors.add(e);
@@ -328,57 +190,23 @@ public class Graph {
 					this.nodeButton.setOpaque(false);
 				}
 				this.add(this.nodeButton);
-
 			}
-
 		}
- 
-
 	}
 
 	public Node getNode(String string) {
-		for (Node item : nodes)
+		for (Node item : this.nodes)
 			if (item.getElement().equals(string))
 				return item;
 		return null;
-
- 
- 
+	}
+	
+	public ArrayList<Node> getNodes() {
+		return this.nodes;
 	}
 
-	private class Edge {
-		private Node otherNode;
-		// private double cost;
-		private double danger;
-		private CostFxn costFxn;
-		private double straightDist;
-
-		public Edge(Node n, double c) {
-			this.otherNode = n;
-			this.straightDist = c;
-			this.costFxn = new CostFxn(this.straightDist, this.danger);
-		}
-
-		public double distCost() {
-			return this.costFxn.distanceCost;
-		}
-
-		public double timeCost() {
-			return this.costFxn.timeCost;
-		}
-	}
-
-	public String roadTripCalculator(String string, String string2,
-			Object minimumTextBox) {
-		// TODO Auto-generated method stub.
+	public String roadTripCalculator(String element, String element2,
+			Object roadTripTextBox) {
 		return null;
 	}
-
-	public ArrayList<Node> getNodes() {
-		// TODO Auto-generated method stub.
-		return nodes;
-	}
-	
-	
-
 }

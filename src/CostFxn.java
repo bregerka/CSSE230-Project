@@ -1,14 +1,14 @@
 
-public class CostFxn<T extends Comparable<? super T>> {
+public class CostFxn{
 
 	double timeCost,distanceCost,dangerCost;
 	int MOVEMENTPACE = 8;
-	int BASEDISTANCE = 1000;
+	int BASEDISTANCE = 15;
 	
 	public CostFxn(double straightDist,double danger){
 		this.dangerCost = danger;
 		this.distanceCost = distanceCalc(straightDist);
-		this.timeCost = timeCalc(straightDist);		
+		this.timeCost = timeCalc(straightDist);
 	}
 	
 	private double timeCalc(double straightDist) {
@@ -17,7 +17,12 @@ public class CostFxn<T extends Comparable<? super T>> {
 														 //grab values after the decimal and mult
 														 //mult by 60 to get to mins
 	}
+	
 	private double distanceCalc(double straightDist) {
 		return straightDist + BASEDISTANCE*this.dangerCost;
+	}
+	
+	public int getDist(){
+		return (int) this.distanceCost;
 	}
 }
