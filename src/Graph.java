@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 public class Graph {
 	ArrayList<Node> nodes;
 	private int numNodes;
-	private int numEdges;
 	private double maxDistance;
 	private double maxTime;
 	private ImageExample imageEx;
@@ -22,38 +21,53 @@ public class Graph {
 	ArrayList<Route> routes;
 	PriorityQueue<Route> shortest;
 
+	/**
+	 * Creates a datastructure that contains Nodes which represent cities.
+	 * @param imageExample
+	 */
 	public Graph(ImageExample imageExample) {
 		this.imageEx = imageExample;
 		this.nodes = new ArrayList<>();
 		this.numNodes = 0;
-		this.numEdges = 0;
 	}
 
+	/**
+	 * Return the nodes as a string
+	 */
 	public String toString() {
 		return this.nodes.toString();
 	}
-
+	/**
+	 * Create a new Node object with a name, a coordinate and a list of shops
+	 * @param e
+	 * @param c
+	 * @param i
+	 * @return
+	 */
 	public boolean addNode(String e, Coordinate c, int[] i) {
 		this.nodes.add(new Node(e, c, i));
 		this.numNodes++;
 		return true;
 	}
-
+	/**
+	 * check to see if the ArrayList contains the node, true if it does false otherwise
+	 * @param e
+	 * @return Boolean
+	 */
 	public boolean containsNode(Node e) {
 		return this.nodes.contains(e);
 	}
-
-	public boolean addEdge(Node e1, Node e2) {
-		if (!this.nodes.contains(e1) && !this.nodes.contains(e2))
-			return false;
-		this.numEdges++;
-		return true;
-	}
-
+	/**
+	 * Set max distance for routes
+	 * @param x
+	 */
 	public void setMaxDistance(double x) {
 		this.maxDistance = x;
 	}
-
+	/**
+	 * Set max time for routes
+	 * @param x
+	 */
 	public void setMaxTime(double x) {
 		this.maxTime = x;
 	}
@@ -76,7 +90,12 @@ public class Graph {
 		ArrayList<Node> Neighbors;
 		private CostFxn cstFxn;
 		int interest = -1;
-
+		/**
+		 * Node class constructor that takes in a name, a location, and shops
+		 * @param e
+		 * @param location
+		 * @param i
+		 */
 		public Node(String e, Coordinate location, int[] i) {
 			loadImage();
 //			matches = i;
@@ -138,25 +157,41 @@ public class Graph {
 			});
 
 		}
-		
+		/**
+		 * Set danger levels
+		 * @param danger
+		 */
 		public void setDanger(int danger){
 			this.danger = danger;
 		}
-		
+		/**
+		 * Set interest Levels
+		 * @param interest
+		 */
 		public void setInterest(int interest){
 			this.interest = interest;
 		}
-		
+		/**
+		 * Compare interests to one another
+		 * @param otherInterest
+		 * @return
+		 */
 		public int compareInterest(int otherInterest){
 			if (this.interest < otherInterest) return -1;
 			if (this.interest > otherInterest) return 1;
 			return 0;
 		}
-
+		/**
+		 * Get the name of the node
+		 * @return
+		 */
 		String getElement() {
 			return this.element;
 		}
-
+		/**
+		 * set the neighbors of the node via a string array
+		 * @param s
+		 */
 		void setNeighbors(String[] s) {
 			this.Neighbors = new ArrayList<>();
 			for (String item : s) {
@@ -164,19 +199,28 @@ public class Graph {
 				this.Neighbors.add(Graph.this.getNode(item));
 			}
 		}
-
+		/**
+		 * Loads the icon image
+		 */
 		private void loadImage() {
 
 			ImageIcon imagIcon = new ImageIcon("src\\icon.png");
 			this.image = imagIcon.getImage();
 
 		}
-
+		/**
+		 * adds nodeneighbors for a Node by Node
+		 * @param e
+		 */
 		public void addNodeNeighbors(Node e) {
 			this.nodeNeighbors.add(e);
 		}
  
-
+		/**
+		 * Add a rating for a node location
+		 * @param x
+		 * @return
+		 */
 		public double addRating(double x) {
 			this.rating = this.rating * this.numRatings;
 			this.numRatings++;
@@ -184,6 +228,9 @@ public class Graph {
 			return this.rating;
 		}
 
+		/**
+		 * Paint the graphics object
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			this.xBorder = ((Graph.this.imageEx.map.x * 2 + this.c.getX()
@@ -203,26 +250,30 @@ public class Graph {
 				this.add(this.nodeButton);
 			}
 		}
-
-		public void getInterest() {
-			// TODO Auto-generated method stub.
-			
+		/**
+		 * return the interest value
+		 * @return
+		 */
+		public int getInterest() {
+			return this.interest;
 		}
 	}
-
+	/**
+	 * return the specified node
+	 * @param string
+	 * @return
+	 */
 	public Node getNode(String string) {
 		for (Node item : this.nodes)
 			if (item.getElement().equals(string))
 				return item;
 		return null;
 	}
-	
+	/**
+	 * return the arraylist of nodes
+	 * @return
+	 */
 	public ArrayList<Node> getNodes() {
 		return this.nodes;
-	}
-
-	public String roadTripCalculator(String element, String element2,
-			Object roadTripTextBox) {
-		return null;
 	}
 }

@@ -18,7 +18,10 @@ public class Map extends JPanel {
 
     ImageExample I ;
     Coordinate c;
-
+    /**
+     * Creates a map layout using imageExample
+     * @param imageExample
+     */
     public Map(ImageExample imageExample) {
     	c = new Coordinate(0, 0);
     	I = imageExample;
@@ -26,8 +29,9 @@ public class Map extends JPanel {
         setPreferredSize(new Dimension(1221, 858));
     }
     
-    
-    
+    /**
+     * Initialize the map
+     */
     private void initMap() {
     	 
         loadImage();
@@ -35,15 +39,20 @@ public class Map extends JPanel {
         h =  bardejov.getHeight(this);
         ww=w;
         hh=h;
- 
     }
-    
+    /**
+     * Load the imageIcon from a .png
+     */
     private void loadImage() {
         
         ImageIcon ii = new ImageIcon("src\\Skyrim_Map.png");
         bardejov = ii.getImage();        
     }
     
+    
+    /**
+     * Paint the component to the graphics object
+     */
     @Override
     public void paintComponent(Graphics g) {
     	
@@ -58,7 +67,10 @@ public class Map extends JPanel {
     }
 
 
-
+/**
+ * Allow zoom in and zoom out
+ * @param source
+ */
 	public void ChangeZoom(int source) {
 		I.Zoom = source; 
 	}
