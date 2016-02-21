@@ -60,7 +60,7 @@ public class Map extends JPanel {
 
 
 	public void ChangeZoom(int source) {
-		I.Zoom = source;
+		I.Zoom = source; 
 	}
 
 

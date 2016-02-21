@@ -5,14 +5,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Graph<T> {
-	Hashtable<T, Node> nodes;
+	ArrayList<Node> nodes;
 	private int numNodes;
 	private int numEdges;
 	private double maxDistance;
@@ -21,7 +20,7 @@ public class Graph<T> {
 
 	public Graph(ImageExample imageExample) {
 		this.imageEx = imageExample;
-		this.nodes = new Hashtable<T, Node>();
+		this.nodes = new ArrayList<>();
 		this.numNodes = 0;
 		this.numEdges = 0;
 	}
@@ -30,39 +29,26 @@ public class Graph<T> {
 		return this.nodes.toString();
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public boolean addNode(T e, Coordinate c, int[] i) {
-		this.nodes.put(e, new Node(e, c, i));
-=======
-	public boolean addNode(T e, Coordinate c) {
-		this.nodes.put(e, new Node(e, c));
->>>>>>> origin/master
-=======
-
-	public boolean addNode(T e, Coordinate c, int[] i) {
-		this.nodes.put(e, new Node(e, c, i));
-
-	public boolean addNode(T e, Coordinate c) {
-		this.nodes.put(e, new Node(e, c));
-
->>>>>>> origin/master
+		this.nodes.add(new Node(e, c, i));
 		this.numNodes++;
 		return true;
 	}
 
-	public Node getNode(T e) {
-		return this.nodes.get(e);
+	public boolean addNode(Node node) {
+		this.nodes.add(node);
+		this.numNodes++;
+		return true;
 	}
 
-	public boolean containsNode(T e) {
-		return this.nodes.containsKey(e);
+	public boolean containsNode(Node e) {
+		return this.nodes.contains(e);
 	}
 
-	public boolean addEdge(T e1, T e2) {
-		if (!this.nodes.containsKey(e1) && !this.nodes.containsKey(e2))
+	public boolean addEdge(Node e1, Node e2) {
+		if (!this.nodes.contains(e1) && !this.nodes.contains(e2))
 			return false;
-		this.nodes.get(e1).addEdge(e2);
+		// e1.addEdge(e2.element);
 		this.numEdges++;
 		return true;
 	}
@@ -82,7 +68,6 @@ public class Graph<T> {
 	class Node extends JPanel {
 
 		T element;
-		private ArrayList<Edge> neighbors;
 		private double rating;
 		private int numRatings;
 		private Coordinate c;
@@ -92,47 +77,33 @@ public class Graph<T> {
 		JPanel nodePanel;
 		private int xBorder;
 		private int yBorder;
-<<<<<<< HEAD
 
 		int[] Matches;
 		protected JButton newa;
-=======
->>>>>>> origin/master
+		ArrayList<Node> Neighbors;
 
-
-		int[] Matches;
-		protected JButton newa;
-
-		public Node(T e, Coordinate location) {
+		public Node(T e, Coordinate location, int[] i) {
 			loadImage();
+			this.Matches = i;
 			this.newa = new JButton();
-			nodePanel = new JPanel();
+			this.nodePanel = new JPanel();
 			this.newa.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Graph.this.imageEx.remove(Node.this.newa);
 					Graph.this.imageEx.repaint();
-					
-					
+
 				}
 			});
 
 			setSize(1, 1);
-<<<<<<< HEAD
-			this.Matches = matches;
-			this.newa = new JButton();
-			newa.setBounds(0, 0, 30, 30);
-=======
->>>>>>> origin/master
 
-//			this.Matches = matches;
+			// this.Matches = matches;
 			this.newa = new JButton();
-			newa.setBounds(0, 0, 30, 30);
-
+			this.newa.setBounds(0, 0, 30, 30);
 
 			this.element = e;
-			this.neighbors = new ArrayList<Edge>();
 			this.c = location;
 			this.numRatings = 0;
 			this.rating = 0;
@@ -146,21 +117,36 @@ public class Graph<T> {
 			this.nodeButton.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (java.util.Arrays.asList(nodePanel.getComponents()).contains(newa)){
-						nodePanel.remove(newa);
-					}
-					else nodePanel.add(newa);
-					
-					if (Graph.this.imageEx.q.contains(Node.this.element.toString()))
-						Graph.this.imageEx.q.remove(Node.this.element.toString());
+				public void actionPerformed(ActionEvent e1) {
+					if (java.util.Arrays.asList(Node.this.nodePanel.getComponents()).contains(Node.this.newa)) {
+						Node.this.nodePanel.remove(Node.this.newa);
+					} else
+						Node.this.nodePanel.add(Node.this.newa);
+
+					if (Graph.this.imageEx.q.contains(Node.this))
+						Graph.this.imageEx.q.remove(Node.this);
 					else
-						Graph.this.imageEx.q.offer(Node.this.element.toString());
+						Graph.this.imageEx.q.add(Node.this);
 					Graph.this.imageEx.repaint();
 
 				}
 			});
 
+		}
+
+		String getElement() {
+			return (String) element;
+
+		}
+
+		void setNeighbors(String[] s) {
+			Neighbors = new ArrayList<>();
+			for (String item : s) {
+
+				System.out.println(Graph.this.getNode(item));
+				Neighbors.add(Graph.this.getNode(item));
+
+			}
 		}
 
 		private void loadImage() {
@@ -170,11 +156,50 @@ public class Graph<T> {
 
 		}
 
-		public void addEdge(T e) {
-			Node otherNode = Graph.this.nodes.get(e);
-			double cost = this.c.distanceTo(otherNode.c);
-			this.neighbors.add(new Edge(otherNode, cost));
+		public ArrayList<Node> findPaths(Node a, ArrayList<Node> s, ArrayList<Node> temp, int runDistance, int min) {
+			System.out.println("pop");
+			if (s.contains(this))
+				return null;
+			
+			if (this == a){
+				temp.add(this);
+				return temp;	
+			}
+			for (Node item : Neighbors){			
+				item.findPaths(a, s, temp, runDistance+=c.distanceTo(item.c),min);
+				if(min > runDistance){
+					min = runDistance;
+					s.addAll(temp);
+				}		
+//				if(min > runDistance){
+//					min = runDistance;
+//					s.addAll(temp);
+//				}	
+			}
+			return s;
 		}
+
+		public int findMinDistance(Node poll, ArrayList<Node> a, int i) {
+			System.out.println("pop2");
+			if (a.contains(this))
+				return 99999;
+			a.add(this);
+			if (this == poll)
+				return i;
+
+			// int i;
+			for (Node item : Neighbors)
+				if (i > c.distanceTo(item.c))
+
+					this.findMinDistance(item, a, i += c.distanceTo(item.c));
+			return i;
+		}
+
+		// public void addEdge(Node e) {
+		// Node otherNode = Graph.this.nodes.get(e);
+		// double cost = this.c.distanceTo(otherNode.c);
+		// // this.neighbors.add(new Edge(otherNode, cost));
+		// }
 
 		public double addRating(double x) {
 			this.rating = this.rating * this.numRatings;
@@ -200,15 +225,15 @@ public class Graph<T> {
 
 			}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 		}
-=======
->>>>>>> origin/master
-=======
 
-		}
->>>>>>> origin/master
+	}
+
+	public Node getNode(String string) {
+		for (Node item : nodes)
+			if (item.getElement().equals(string))
+				return item;
+		return null;
 
 	}
 
@@ -237,6 +262,11 @@ public class Graph<T> {
 	public String roadTripCalculator(String string, String string2, Object minimumTextBox) {
 		// TODO Auto-generated method stub.
 		return null;
+	}
+
+	public ArrayList<Node> getNodes() {
+		// TODO Auto-generated method stub.
+		return nodes;
 	}
 
 }
