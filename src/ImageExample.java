@@ -485,7 +485,7 @@ public class ImageExample extends JFrame {
 
 					}
 				}
-
+				q.clear();
 				SearchWindow.setText("City not found");
 
 			}
@@ -495,9 +495,6 @@ public class ImageExample extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (java.util.Arrays.asList(menuPanel.getComponents())
-						.contains(temppanel))
-					menuPanel.remove(temppanel);
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
@@ -507,19 +504,21 @@ public class ImageExample extends JFrame {
 						mainText.setText("Please select 1 more node.");
 					}
 					if (q.size() == 2) {
-						Queue save = q;
 						Graph.Node g = q.poll();
 						ArrayList<Graph.Node> shortestPath = shortestPath(g,
 								q.poll());
 
 						for (Graph.Node item3 : shortestPath) {
 							mainText.append("\n" + item3.getElement());
-
 						}
 
 					}
+					q.clear();
 				}
 				if (Combobox.getSelectedItem() == "Plan Road Trip") {
+					if (java.util.Arrays.asList(menuPanel.getComponents())
+							.contains(temppanel))
+						menuPanel.remove(temppanel);
 					JTextField maxDistWindow = new JTextField(
 							"Enter Max Travel Distance:");
 					temppanel = new JPanel();
@@ -533,11 +532,7 @@ public class ImageExample extends JFrame {
 					repaint();
 					findButton.addActionListener(new ActionListener() {
 						@Override
-						
 						public void actionPerformed(ActionEvent e) {
-							if (java.util.Arrays.asList(menuPanel.getComponents())
-									.contains(temppanel))
-								menuPanel.remove(temppanel);
 							try {
 								if (Integer.parseInt(maxDistWindow.getText()) > 0
 
@@ -567,6 +562,7 @@ public class ImageExample extends JFrame {
 						for (Route r : temp) {
 							if (r.getCost() <= maxLen) {
 								ArrayList<Graph.Node> tempNode = r.getPath();
+								mainText.append("\nNew Path");
 								for (Graph.Node n : tempNode) {
 									mainText.append("\n" + n.element);
 								}
@@ -576,6 +572,7 @@ public class ImageExample extends JFrame {
 					mainText.setText(ImageExample.this.newGraph
 							.roadTripCalculator(q.poll().getElement(), q.poll()
 									.getElement(), getRoadTripTextBox()));
+					q.clear();
 
 				}
 				if (Combobox.getSelectedItem() == "Find Nearest") {
@@ -588,6 +585,7 @@ public class ImageExample extends JFrame {
 
 						checkCheckBoxes();
 					}
+					q.clear();
 				}
 
 			}
