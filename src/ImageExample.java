@@ -34,10 +34,11 @@ public class ImageExample extends JFrame {
 	public static int Zoom = 1000;
 	static Map map;
 	static JTextField SearchWindow;
-	static JPanel temppanel;
+	static JPanel temppanel; 
 	ArrayList<Route> routes;
 	RoutePriorityQueue<Route> shortest = new RoutePriorityQueue<Route>();
 	static int maxLen = -1;
+	static int interestEntered = -1;
 
 	public ImageExample() {
 
@@ -209,6 +210,23 @@ public class ImageExample extends JFrame {
 		newGraph.getNode("Riverwood").setDanger(1);
 		newGraph.getNode("Rorikstead").setDanger(3);
 		newGraph.getNode("Shor's Stone").setDanger(4);
+		
+		newGraph.getNode("Dawnstar").setInterest(3);
+		newGraph.getNode("Falkreath").setInterest(1);
+		newGraph.getNode("Markarth").setInterest(4);
+		newGraph.getNode("Morthal").setInterest(3);
+		newGraph.getNode("Riften").setInterest(3);
+		newGraph.getNode("Solitude").setInterest(2);
+		newGraph.getNode("Whiterun").setInterest(5);
+		newGraph.getNode("Windhelm").setInterest(4);
+		newGraph.getNode("Winterhold").setInterest(5);
+		newGraph.getNode("Dragon Bridge").setInterest(2);
+		newGraph.getNode("Helgen").setInterest(1);
+		newGraph.getNode("Ivarstead").setInterest(2);
+		newGraph.getNode("Karthwasten").setInterest(4);
+		newGraph.getNode("Riverwood").setInterest(5);
+		newGraph.getNode("Rorikstead").setInterest(3);
+		newGraph.getNode("Shor's Stone").setInterest(3);
 
 		this.menuPanel = new JPanel();
 
@@ -333,8 +351,9 @@ public class ImageExample extends JFrame {
 		ComboPanel.add(Combobox);
 		Combobox.addItem("Select Option");
 		Combobox.addItem("Minimum Distance");
-		Combobox.addItem("Find Nearest");
+//		Combobox.addItem("Find Nearest");
 		Combobox.addItem("Plan Road Trip");
+		Combobox.addItem("Specify Interest");
 
 		// Combobox.addItem("Find close by towns");
 
@@ -401,7 +420,7 @@ public class ImageExample extends JFrame {
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(ImageExample.this.checkPanel))
 							menuPanel.remove(ImageExample.this.checkPanel);
-						;
+						
 
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(temppanel))
@@ -414,8 +433,6 @@ public class ImageExample extends JFrame {
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(ImageExample.this.checkPanel))
 							menuPanel.remove(ImageExample.this.checkPanel);
-						;
-
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(temppanel))
 							menuPanel.remove(temppanel);
@@ -428,12 +445,22 @@ public class ImageExample extends JFrame {
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(ImageExample.this.checkPanel))
 							menuPanel.remove(ImageExample.this.checkPanel);
-						;
 
 						if (java.util.Arrays.asList(menuPanel.getComponents())
 								.contains(temppanel))
 							menuPanel.remove(temppanel);
 						mainText.setText("Please Select Something to Do.");
+					}
+					if (Combobox.getSelectedItem() == "Specify Interest") {
+						if (java.util.Arrays.asList(menuPanel.getComponents())
+								.contains(ImageExample.this.checkPanel))
+							menuPanel.remove(ImageExample.this.checkPanel);
+
+						if (java.util.Arrays.asList(menuPanel.getComponents())
+								.contains(temppanel))
+							menuPanel.remove(temppanel);
+						mainText.setText("Enter an interest rating\n to search for.");
+				
 					}
 
 				}
@@ -495,6 +522,49 @@ public class ImageExample extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (Combobox.getSelectedItem() == "Specify Interest") {
+					System.out.println("fkf");
+					if (java.util.Arrays.asList(menuPanel.getComponents())
+							.contains(temppanel))
+						menuPanel.remove(temppanel);
+					JTextField interestWindow = new JTextField(
+							"Enter interest level (1-5):");
+					temppanel = new JPanel();
+					temppanel.add(interestWindow);
+					menuPanel.add(temppanel);
+					menuPanel.remove(mainText);
+
+					repaint();
+					JButton interestButton = new JButton("Find");
+					temppanel.add(interestButton);
+					menuPanel.add(mainText);
+					repaint();
+					setVisible(true);
+					interestButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							try {
+								if (Integer.parseInt(interestWindow.getText()) > 0
+
+										|| Integer.parseInt(interestWindow
+												.getText()) < 20000) {
+									// mainText.setText("Enter New Length:");
+									interestEntered = Integer.parseInt(interestWindow
+											.getText());
+									for (Graph.Node u : newGraph.getNodes()){
+										if (u.interest == interestEntered){
+											mainText.append("\n" + u.element);
+										}
+									}
+								}
+							} catch (Exception a) {
+								mainText.setText("Invalid number.");
+							}
+
+						}
+					});
+			
+				}
 				if (Combobox.getSelectedItem() == "Minimum Distance") {
 					if (q.size() == 0) {
 						mainText.setText("Please select two nodes.");
@@ -525,7 +595,7 @@ public class ImageExample extends JFrame {
 					temppanel.add(maxDistWindow);
 					menuPanel.add(temppanel);
 					menuPanel.remove(mainText);
-					
+
 					JButton findButton = new JButton("Find");
 					temppanel.add(findButton);
 					menuPanel.add(mainText);
@@ -545,7 +615,7 @@ public class ImageExample extends JFrame {
 							} catch (Exception a) {
 								mainText.setText("Invalid length.");
 							}
-							
+
 						}
 					});
 					if (q.size() == 0) {

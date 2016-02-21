@@ -75,6 +75,7 @@ public class Graph {
 		protected JButton newa;
 		ArrayList<Node> Neighbors;
 		private CostFxn cstFxn;
+		int interest = -1;
 
 		public Node(String e, Coordinate location, int[] i) {
 			loadImage();
@@ -141,6 +142,16 @@ public class Graph {
 		public void setDanger(int danger){
 			this.danger = danger;
 		}
+		
+		public void setInterest(int interest){
+			this.interest = interest;
+		}
+		
+		public int compareInterest(int otherInterest){
+			if (this.interest < otherInterest) return -1;
+			if (this.interest > otherInterest) return 1;
+			return 0;
+		}
 
 		String getElement() {
 			return this.element;
@@ -191,6 +202,11 @@ public class Graph {
 				}
 				this.add(this.nodeButton);
 			}
+		}
+
+		public void getInterest() {
+			// TODO Auto-generated method stub.
+			
 		}
 	}
 

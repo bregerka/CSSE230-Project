@@ -1,139 +1,101 @@
 import java.util.ArrayList;
 
-public class RoutePriorityQueue<Object> extends ArrayList<Object> {
-       private int size;
+public class RoutePriorityQueue<T extends Comparable<? super T>> extends
+		ArrayList<T> {
 
-       public RoutePriorityQueue() {
-             size = 0;
-       }
+	public RoutePriorityQueue() {
+	}
 
-       /**
-       * adds elements to the queue then calls for it to be sorted
-       */
-       public boolean add(Object element) {
-             if (element == null)
-                    throw new NullPointerException();
-             super.add(element);
-             if (super.size() > 1)
-                    percolateUp(super.size() - 1);
-             size++;
-             return true;
-       }
+	@Override
+	public boolean add(T element) {
+		super.add(element);
+		if (size() == 1)
+			return true;
+		int childIndex = size() - 1;
+		int parentIndex = getParentIndex(childIndex);
+		while (childIndex > 0) {
+			if (get(childIndex).compareTo(get(parentIndex)) < 0) {
+				swap(childIndex, parentIndex);
+			}
+			childIndex = childIndex / 2;
+		}
+		return true;
+	}
 
-       /**
-       * after removing elements this resorts the queue
-       * 
-        * @param spot
-       */
-       public void percolateDown(int spot) {
-             if (spot != super.size() - 1) {
+	public int getParentIndex(int childIndex) {
+		int parentIndex = (childIndex - 1) / 2;
+		return parentIndex;
+	}
 
-                    int lspot = ((spot + 1) * 2) - 1;
-                    int rspot = (spot + 1) * 2;
-                    if (rspot <= super.size() - 1) {
-                           Route lelement = (Route) super.get(lspot);
-                           Route relement = (Route) super.get(rspot);
-                           Route element = (Route) super.get(spot);
+	public boolean offer(T element2) {
+		return add(element2);
+	}
 
-                           if (element.getCost() > lelement.getCost()
-                                        || element.getCost() > relement.getCost()) {
+	public T peek() {
+		if (size() == 0)
+			return null;
+		return get(0);
+	}
 
-                                 if (relement.getCost() < lelement.getCost()) {
-                                        super.set(spot, (Object) relement);
-                                        super.set(rspot, (Object) element);
-                                        percolateDown(rspot);
-                                 } else if (relement.getCost() > lelement.getCost()) {
-                                        super.set(spot, (Object) lelement);
-                                        super.set(lspot, (Object) element);
-                                        percolateDown(lspot);
-                                 } else {
-                                        return;
-                                 }
+	public T poll() {
+		if (size() == 0)
+			return null;
+		T temp = peek();
+		remove(temp);
+		return temp;
+	}
 
-                           }
-                    }
-             }
+	public boolean remove(T element) {
+		if (element == null)
+			throw new NullPointerException();
+		if (size() == 0)
+			return false;
+		for (int i = 0; i < size(); i++) {
+			if (get(i).compareTo(element) == 0) {
+				return removeHelper(i);
+			}
+		}
+		return false;
+	}
 
-       }
+	public boolean removeHelper(int index) {
+		int smallIndex = findSmallerChildIndex(index);
+		if (smallIndex == -1) {
+			return noChildRemove(index);
+		}
+		swap(index, smallIndex);
+		return removeHelper(smallIndex);
+	}
 
-       /**
-       * after adding an element to the end of the queue this resorts its all
-       * 
-        * @param index
-       */
-       public void percolateUp(int index) {
+	private boolean noChildRemove(int index) {
+		if (index == size() - 1) {
+			super.remove(index);
+			return true;
+		}
+		set(index, get(size() - 1));
+		super.remove(size() - 1);
+		return true;
+	}
 
-             int parentIndex = ((index / 2) + (index % 2) - 1);
-             Route parent = (Route) super.get(parentIndex);
-             if (parent.getCost() > ((Route) super.get(index)).getCost()) {
-                    super.set(parentIndex, super.get(index));
-                    super.set(index, (Object) parent);
-                    if (parentIndex > 0)
-                           percolateUp(parentIndex);
-             }
-       }
+	private void swap(int index, int smallIndex) {
+		T temp = get(smallIndex);
+		set(smallIndex, get(index));
+		set(index, temp);
+	}
 
-       /**
-       * shows the element at the beginning of the queue
-       * 
-        * @return
-       */
-       public Route peek() {
-             if (super.size() == 0)
-                    return null;
-             return (Route) super.get(0);
-
-       }
-
-       public int getSize() {
-             return this.size;
-       }
-
-       /**
-       * shows the first element and removes it
-       * 
-        * @return first element
-       */
-       public Route poll() {
-             if (this.size() == 0)
-                    return null;
-             if (this.size() > 2) {
-                    Route tempor = (Route) super.get(1);
-                    super.set(1, super.get(2));
-                    super.set(2, (Object) tempor);
-             }
-             Route temp = (Route) super.get(0);
-             remove(temp);
-             return temp;
-
-       }
-
-       /**
-       * removes specified element
-        * @param element
-       * @return if successful
-       */
-       public boolean remove(Route element) {
-             if (super.contains(element)) {
-                    int spot = super.indexOf(element);
-                    super.set(spot, super.get(super.size() - 1));
-                    super.remove(super.size() - 1);
-                    if (super.size() > 1)
-                           percolateDown(spot);
-                    size--;
-                    return true;
-             } else
-                    return false;
-
-       }
-
-       /**
-       * adds the element to the queue 
-        * @param element
-       * @return
-       */
-       public boolean offer(Object element) {
-             return this.add(element);
-       }
-
+	public int findSmallerChildIndex(int parentIndex) {
+		int secondChildIndex = (parentIndex + 1) * 2;
+		int firstChildIndex = ((parentIndex + 1) * 2) - 1;
+		if (firstChildIndex >= size()) {
+			return -1;
+		}
+		if (secondChildIndex >= size()) {
+			return firstChildIndex;
+		}
+		int compareChildren = get(firstChildIndex).compareTo(
+				get(secondChildIndex));
+		if (compareChildren < 0)
+			return firstChildIndex;
+		return secondChildIndex;
+	}
 }
